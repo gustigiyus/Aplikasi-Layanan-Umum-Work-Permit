@@ -9,35 +9,30 @@
 
         <?= $this->session->flashdata('message'); ?>
 
-        <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newRoleModal">Tambah Karyawan</a>
+        <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newRoleModal">Tambah Ruangan</a>
         <table id="complain" class="table table-striped table-hover table-bordered table-responsive" width="100%" cellspacing="0">
             <thead>
                 <tr>
                     <th class="align-middle" style="text-align: center;">No.</th>
-                    <th class="align-middle" style="text-align: center;">Nama Lengkap</th>
-                    <th class="align-middle" style="text-align: center;">Alamat Email</th>
-                    <th class="align-middle" style="text-align: center;">Foto Profil</th>
-                    <th class="align-middle" style="text-align: center;">Role ID</th>
-                    <th class="align-middle" style="text-align: center;">Akun Dibuat</th>
+                    <th class="align-middle" style="text-align: center;">Tipe Ruangan</th>
+                    <th class="align-middle" style="text-align: center;">Kapasitas</th>
+                    <th class="align-middle" style="text-align: center;">Perlengkapan</th>
                     <th class="align-middle" style="text-align: center;">Tindakan</th>
                 </tr>
             </thead>
             <tbody>
                 <?php $i = 1; ?>
-                <?php foreach ($role_name as $urs) : ?>
+                <?php foreach ($ruangan as $r) : ?>
                     <tr>
                         <td scope="row" class="align-middle" style="text-align: center;"><?= $i; ?></td>
-                        <td class="align-middle" style="text-align: center;"><?= $urs['name']; ?></td>
-                        <td class="align-middle" style="text-align: center;"><?= $urs['email']; ?></td>
-                        <td class="align-middle" style="text-align: center;"><?= $urs['image']; ?></td>
-                        <td class="align-middle" style="text-align: center;"><?= $urs['role']; ?></td>
-                        <td class="align-middle" style="text-align: center;"><?= $urs['is_active']; ?></td>
-                        <td class="align-middle" style="text-align: center;"><?= date('d F Y', $urs['date_created']); ?></td>
+                        <td class="align-middle" style="text-align: center;"><?= $r['tipe_ruangan']; ?></td>
+                        <td class="align-middle" style="text-align: center;"><?= $r['kapasitas_ruangan']; ?></td>
+                        <td class="align-middle" style="text-align: center;"><?= $r['perlengkapan']; ?></td>
                         <td class="align-middle" style="text-align: center;">
-                            <a class="btn btn-warning btn-sm btn-icon mb-1" data-toggle="modal" data-target="#edituser<?PHP echo $urs['id']; ?>">
+                            <a class="btn btn-warning btn-sm btn-icon mb-1" data-toggle="modal" data-target="#edituser<?PHP echo $r['id']; ?>">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a class="btn btn-danger btn-sm btn-icon" data-toggle="modal" data-target="#hapususer<?PHP echo $urs['id']; ?>">
+                            <a class="btn btn-danger btn-sm btn-icon" data-toggle="modal" data-target="#hapususer<?PHP echo $r['id']; ?>">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </td>

@@ -139,6 +139,7 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User Telah Diedit!</div>');
         redirect('admin/manageuser');
     }
+    
     public function delete_user($id)
     {
         $this->db->where('id', $id);
@@ -184,5 +185,18 @@ class Admin extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User baru telah ditambahkan!</div>');
             redirect('admin/manageuser');
         }
+    }
+
+    public function manageruangan()
+    {
+        $data['title'] = 'Kelola Ruangan';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['ruangan'] = $this->db->get('tb_master_ruangan')->result_array();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('admin/ruangan-manage', $data);
+        $this->load->view('templates/footer');
     }
 }
