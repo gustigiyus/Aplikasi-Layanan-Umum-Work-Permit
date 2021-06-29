@@ -139,7 +139,7 @@ class Admin extends CI_Controller
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">User Telah Diedit!</div>');
         redirect('admin/manageuser');
     }
-    
+
     public function delete_user($id)
     {
         $this->db->where('id', $id);
@@ -198,5 +198,51 @@ class Admin extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('admin/ruangan-manage', $data);
         $this->load->view('templates/footer');
+    }
+
+    public function addruangan()
+    {
+        $this->form_validation->set_rules('tipe_ruangan', 'Tipe Ruangan', 'required|trim|is_unique[tb_master_ruangan.tipe_ruangan]',
+        [
+            'is_unique' => 'Tipe Ruangan tersebut Sudah Ada!'
+        ]);
+        $this->form_validation->set_rules('kapasitas_ruangan', 'Kapasitas Ruangan', 'required|numeric|greater_than[0.99]');
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+        $data = [
+            'tipe_ruangan' => htmlspecialchars($this->input->post('tipe_ruangan', true)),
+            'kapasitas_ruangan' => $this->input->post('kapasitas_ruangan', true),
+            'perlengkapan' => substr(implode(', ', $this->input->post('perlengkapan')), 0)
+        ];
+
+        $this->db->insert('tb_master_ruangan', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ruangan baru telah ditambahkan!</div>');
+        redirect('admin/manageruangan');
+    }
+
+    public function editruangan()
+    {
+
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $ruangan = $this->input->post('tipe_ruangan', true);
+        $data = [
+            'tipe_ruangan' => htmlspecialchars($this->input->post('tipe_ruangan', true)),
+            'kapasitas_ruangan' => $this->input->post('kapasitas_ruangan', true),
+            'perlengkapan' => $this->input->post('perlengkapan', true)
+        ];
+        $this->db->where('tipe_ruangan', $ruangan);
+        $this->db->update('tb_master_ruangan', $data);
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ruangan Telah Diedit!</div>');
+        redirect('admin/manageruangan');
+    }
+    
+    public function delete_ruangan($id)
+    {
+        $this->db->where('id_master_ruangan', $id);
+        $this->db->delete('tb_master_ruangan');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Ruangan Telah Dihapus!</div>');
+        redirect('admin/manageruangan');
     }
 }

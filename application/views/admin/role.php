@@ -14,7 +14,7 @@
             <table id="Complain" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="align-middle" style="text-align: center;">#</th>
+                        <th class="align-middle" style="text-align: center;">No.</th>
                         <th class="align-middle" style="text-align: center;">Role</th>
                         <th class="align-middle" style="text-align: center;">Tindakan</th>
                     </tr>

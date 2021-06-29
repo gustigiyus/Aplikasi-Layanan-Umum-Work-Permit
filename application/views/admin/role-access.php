@@ -15,7 +15,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th class="align-middle" style="text-align: center;">#</th>
+                        <th class="align-middle" style="text-align: center;">No.</th>
                         <th class="align-middle" style="text-align: center;">Menu</th>
                         <th class="align-middle" style="text-align: center;">Hak Akses</th>
                     </tr>
