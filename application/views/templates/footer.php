@@ -148,7 +148,29 @@
         })
     });
 </script>
-
+<script>
+    $(document).ready(function() {
+        $('#menu_id').change(function() {
+            var menu_id = $(this).val();
+            $.ajax({
+                url: "<?= base_url("menu/get_idmenu"); ?>",
+                method: "POST",
+                dataType: "JSON",
+                data: {
+                    menu_id: menu_id
+                },
+                success: function(array) {
+                    var html = "";
+                    for (let index = 0; index < array.length; index++) {
+                        const element = array[index];
+                        html += "<option value='" + array[index].id + "'>" + array[index].title + "</option>"
+                    }
+                    $('#ssmenu_id').html(html);
+                }
+            })
+        })
+    })
+</script>
 </body>
 
 </html>
