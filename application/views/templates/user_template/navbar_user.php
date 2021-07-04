@@ -114,6 +114,54 @@
 
                                         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
                                             <ul class="menu-subnav">
+												<?php
+                                                $queryssMenu = "SELECT `user_ss_menu`.*, `user_ss_menu`.`id` AS 'id_ss', `user_menu`.*
+                                                                    FROM  `user_ss_menu` JOIN `user_menu`
+                                                                    ON    `user_ss_menu`.`menu_id` = `user_menu`.`id`
+                                                                    WHERE `user_ss_menu`.`menu_id` = $menuId
+                                                                    AND   `user_ss_menu`.`is_active` = 1
+                                                                    ";
+                                                $ssmenu = $this->db->query($queryssMenu)->result_array();
+                                                ?>
+												<!--begin::SSmenu-->
+                                                <?php foreach ($ssmenu as $ssm) : ?>
+                                                    <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
+                                                        <a href="#" class="menu-link menu-toggle">
+                                                            <span class="svg-icon menu-icon">
+                                                                <i class="<?= $ssm['icon'] ?>"></i>
+                                                            </span>
+                                                            <span class="menu-text"><?= $ssm['title'] ?></span>
+                                                            <i class="menu-arrow"></i>
+                                                        </a>
+                                                        <div class="menu-submenu menu-submenu-classic menu-submenu-right">
+                                                            <ul class="menu-subnav">
+                                                                <?php
+                                                                $ssid = $ssm['id_ss'];
+                                                                $queryssMenu = "SELECT *
+                                                                            FROM   `user_tree_menu`
+                                                                            WHERE `user_tree_menu`.`menu_tree` = $ssid
+                                                                            AND `user_tree_menu`.`is_active` = 1
+                                                                            ";
+                                                                $treeMenu = $this->db->query($queryssMenu)->result_array();
+
+                                                                ?>
+																<?php foreach ($treeMenu as $tm) : ?>
+                                                                    <li class="menu-item" aria-haspopup="true">
+                                                                        <a href="<?= base_url('/') . $tm['url'] ?>" class="menu-link">
+                                                                            <i class="<?= $tm['icon'] ?>">
+                                                                                <span></span>
+                                                                            </i>
+                                                                            <span class="menu-text"><?= $tm['title'] ?></span>
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endforeach; ?>
+                                                                <!--end::Treemenu-->
+															</ul>
+														</div>
+												</li>
+												<?php endforeach; ?>
+                                                <!--end::SSubmenu-->
+                                                <!--begin::MulaiSubmenu-->
                                                 <?php foreach ($subMenu as $sm) : ?>
                                                     <li class="menu-item" aria-haspopup="true">
                                                         <a href="<?= base_url($sm['url']); ?>" class="menu-link">
