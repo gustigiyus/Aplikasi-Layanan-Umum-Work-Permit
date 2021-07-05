@@ -170,16 +170,17 @@ class Profile extends CI_Controller
             }
 
             $data = [
-                'alamat1' => $this->input->post('alamat1'),
-                'alamat2' => $this->input->post('alamat2'),
-                'jenis_kelamin' => $this->input->post('jk'),
-                'nama_perusahaan' => $this->input->post('na_pe'),
-                'kota' => $this->input->post('kota'),
-                'tempat_lahir' => $this->input->post('tempat_lahir'),
-                'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+                'nip' => $this->input->post('nip'),
                 'nomer_telepon' => $this->input->post('nopel'),
-                'nomer_ktp' => $this->input->post('nktp'),
-                'foto_ktp' => $upload_image
+                'divisi' => $this->input->post('divisi'),
+                'nama_atasan' => $this->input->post('nama_atasan'),
+                'em_atasan' => $this->input->post('em_atasan'),
+                'no_atasan' => $this->input->post('no_atasan'),
+                // 'kota' => $this->input->post('kota'),
+                // 'tempat_lahir' => $this->input->post('tempat_lahir'),
+                // 'tanggal_lahir' => $this->input->post('tanggal_lahir'),
+                // 'nomer_ktp' => $this->input->post('nktp'),
+                // 'foto_ktp' => $upload_image
             ];
             $this->db->where('email', $email);
             $this->db->update('detail_user', $data);

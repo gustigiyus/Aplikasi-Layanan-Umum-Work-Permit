@@ -103,7 +103,8 @@ class Menu extends CI_Controller
     $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sub Menu Dihapus!</div>');
     redirect('menu/submenu');
   }
-	//KELOLA TREE MENU 
+
+  //KELOLA TREE MENU 
 
   //SSMenu
   public function ssmenu()

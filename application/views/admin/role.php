@@ -1,17 +1,31 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
+    <div class=" card shadow-sm" style="border-bottom: #315c9a; color: #315c9a;">
+        <div class="card-header bg-white py-3">
+            <div class="row">
+                <div class="col">
+                    <h1 class="h3 text-gray-800"><?= $title ?></h1>
+                </div>
+                <div class="col-auto">
+                    <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-4 text-gray-800"><?= $title ?></h1>
+                    <?= $this->session->flashdata('message'); ?>
 
-    <div class="row">
-        <div class="col-lg-6">
-            <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
+                    <a href="" class="btn btn-primary btn-icon-split mb-3" data-toggle="modal"
+                        data-target="#newRoleModal">
 
-            <?= $this->session->flashdata('message'); ?>
-
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newRoleModal">Tambah Role Baru</a>
-            <table id="Complain" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
+                        <span class="icon">
+                            <i class="fa fa-plus"></i>
+                        </span>
+                        <span class="text">
+                            Tambah Role Baru
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive mt-3 col-auto">
+            <table id="complain" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="align-middle" style="text-align: center;">No.</th>
@@ -22,17 +36,18 @@
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($role as $r) : ?>
-                        <tr>
-                            <td scope="row" class="align-middle" style="text-align: center;"><?= $i; ?></td>
-                            <td><?= $r['role']; ?></td>
-                            <td class="align-middle" style="text-align: center;">
-                                <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-success">Hak Akses</a>
-                                <a href="" class="badge badge-warning">Ubah</a>
-                                <a href="" class="badge badge-danger">Hapus</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td scope="row" class="align-middle" style="text-align: center;"><?= $i; ?></td>
+                        <td><?= $r['role']; ?></td>
+                        <td class="align-middle" style="text-align: center;">
+                            <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-success">Hak
+                                Akses</a>
+                            <a href="" class="badge badge-warning">Ubah</a>
+                            <a href="" class="badge badge-danger">Hapus</a>
+                        </td>
+                    </tr>
 
-                        <?php $i++; ?>
+                    <?php $i++; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
