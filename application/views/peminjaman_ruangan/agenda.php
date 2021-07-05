@@ -68,11 +68,11 @@
                         </span>
                         <h3 class="card-label"><?= $title ?></h3>
                     </div>
-                    <div class="card-toolbar">
+                    <!-- <div class="card-toolbar">
                         <a href="#" class="btn btn-light-primary font-weight-bold" data-toggle="modal" data-target="#tambah_agenda">
                             <i class="ki ki-plus "></i> Tambah Kegiatan
                         </a>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="card-body">
                     <div id="kt_calendar"></div>

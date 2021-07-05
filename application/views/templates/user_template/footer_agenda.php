@@ -165,16 +165,15 @@
                     defaultView: 'dayGridMonth',
                     defaultDate: TODAY,
 
-                    editable: true,
+                    editable: false,
                     eventLimit: true, // allow "more" link when too many events
                     navLinks: true,
                     events: [<?php foreach ($agenda as $a) : ?> {
-                                title: '<?= $a['judul'] ?>',
-                                start: '<?= substr($a['tanggal_agenda'], 0, 7) ?>' + '<?= substr($a['tanggal_agenda'], 7, 3) ?>T<?= $a['waktu_mulai'] ?>',
-                                description: '<?= $a['kegiatan'] ?>',
-                                end: '<?= substr($a['tanggal_agenda'], 0, 7) ?>' + '<?= substr($a['tanggal_agenda'], 7, 3) ?>T<?= $a['waktu_akhir'] ?>',
-                                <?php if ($a['penulis'] == 'cocmarvel10@gmail.com') : ?>
-                                    classsName: "fc-event-light fc-event-solid-primary"
+                                title: '<?= $a['kegiatan'] ?>',
+                                start: '<?= substr($a['tanggal_mulai'], 0, 7) ?>' + '<?= substr($a['tanggal_mulai'], 7, 3) ?>T<?= $a['waktu_mulai'] ?>',
+                                end: '<?= substr($a['tanggal_mulai'], 0, 7) ?>' + '<?= substr($a['tanggal_mulai'], 7, 3) ?>T<?= $a['waktu_akhir'] ?>',
+                                <?php if ($a['peminjam'] == 'cocmarvel10@gmail.com') : ?>
+                                    className: "fc-event-light fc-event-solid-primary"
                                 <?php endif; ?>
                             },
                         <?php endforeach; ?>

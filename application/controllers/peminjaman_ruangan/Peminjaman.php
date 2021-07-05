@@ -9,55 +9,19 @@ class Peminjaman extends CI_Controller
 	{
 		$data['title'] = 'Peminjaman Ruangan';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
 		$this->load->model('Profile_model', 'PM');
+		$this->load->model('Pinjaman_model', 'Pinjaman');
 		$data['role_user'] = $this->PM->role_user()->result_array();
+		$data['ruangan'] = $this->Pinjaman->getRuangan();
 		$data['pinjaman'] = $this->db->get('tb_pinjaman')->result_array();
 		
 		//load view
         $this->load->view('templates/user_template/header_user', $data);
         $this->load->view('templates/user_template/navbar_user', $data);
-        $this->load->view('peminjaman_ruangan/peminjaman', $data);
+        $this->load->view('peminjaman_ruangan/ViewPeminjaman', $data);
         $this->load->view('templates/user_template/sidebar_modal_user', $data);
-        $this->load->view('templates/user_template/footer');
-		// if ($this->session->userdata('role_id') == 3) {
-
-		// 	$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-		// 	$data['pinjaman'] = $this->db->get('tb_pinjaman')->result_array();
-		// 	// $data['izin'] = $this->db->get('tb_izin_kerja')->result_array();
-
-		// 	$this->load->view('templates/header', $data);
-		// 	$this->load->view('templates/sidebar', $data);
-		// 	$this->load->view('templates/topbar', $data);
-		// 	$this->load->view('umum/admin/index', $data);
-		// 	$this->load->view('templates/footer');
-		// } else {
-		// 	$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-		// 	$data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
-		// 	$data['pinjaman'] = $this->db->get_where('tb_pinjaman', ['email' => $this->session->userdata('email')])->result_array();
-		// 	$data['izin'] = $this->db->get('tb_izin_kerja')->result_array();
-		// 	$this->load->model('Profile_model', 'PM');
-		// 	$data['role_user'] = $this->PM->role_user()->result_array();
-
-		// 	if ($this->session->userdata('role_id') == 4) {
-		// 		$this->load->view('templates/user_template/header_user', $data);
-		// 		$this->load->view('templates/user_template/navbar_user', $data);
-		// 		$this->load->view('umum/pengguna/index.php', $data);
-		// 		$this->load->view('templates/user_template/sidebar_modal_user', $data);
-		// 		$this->load->view('templates/user_template/footer_user');
-		// 	} elseif ($this->session->userdata('role_id') == 2) {
-		// 		$this->load->view('templates/user_template/header_user', $data);
-		// 		$this->load->view('templates/user_template/navbar_user', $data);
-		// 		$this->load->view('umum/pengguna/ViewPinjaman.php', $data);
-		// 		$this->load->view('templates/user_template/sidebar_modal_user', $data);
-		// 		$this->load->view('templates/user_template/footer_user');
-		// 	} else {
-		// 		$this->load->view('templates/header', $data);
-		// 		$this->load->view('templates/sidebar', $data);
-		// 		$this->load->view('templates/topbar', $data);
-		// 		$this->load->view('umum/admin/index', $data);
-		// 		$this->load->view('templates/footer');
-		// 	}
-		// }
+        $this->load->view('templates/user_template/footer_user');
 	}
 
 	//Tambah pinjaman
@@ -65,117 +29,50 @@ class Peminjaman extends CI_Controller
 	{
 		$mail = $this->input->post('email');
 		$nm = $this->input->post('nama');
+		$nip = $this->input->post('nip');
+		$hp = $this->input->post('hp');
+		$divisi = $this->input->post('divisi');
 		$kgt_pjm = $this->input->post('kegiatan_pinjaman');
 		$rg_pjm = $this->input->post('ruang_pinjaman');
-		$ly_pjm = $this->input->post('layout_pinjaman');
 		$strat_pjm = $this->input->post('waktu_mulai');
-		$end_pjm = $this->input->post('waktu_selesai');
-		$tgl_pjm = $this->input->post('tanggal_pinjaman');
-		$tgl_req = $this->input->post('tgl_request');
+		$end_pjm = $this->input->post('waktu_akhir');
+		$tgl_mulai = $this->input->post('tanggal_mulai');
+		$tgl_req = date('Y-m-d H:i:s');
+		$prl = $this->input->post('perlengkapan');
 
 		$data = [
 			'email' => $mail,
 			'nama' => $nm,
+			'nip' => $nip,
+			'hp' => $hp,
+			'divisi' => $divisi,
 			'kegiatan_pinjaman' => $kgt_pjm,
 			'ruang_pinjaman' => $rg_pjm,
-			'layout_pinjaman' => $ly_pjm,
 			'waktu_mulai' => $strat_pjm,
 			'waktu_selesai' => $end_pjm,
-			'tanggal_pinjaman' => $tgl_pjm,
-			'tgl_request' => $tgl_req
+			'tanggal_mulai' => $tgl_mulai,
+			'tgl_request' => $tgl_req,
+			'perlengkapan' => substr(implode(', ', $prl), 0)
 		];
-		// $upload_image = $_FILES['gambar'];
-		// $upload_image2 = $_FILES['gambar2'];
-		// $upload_image3 = $_FILES['gambar3'];
-		// //gambar 1
-		// if ($upload_image = '') {
-		// 	echo $this->upload->display_errors();
-		// } else {
-		// 	$filename = $_FILES['gambar']['name'];
-		// 	$extension = pathinfo($filename, PATHINFO_EXTENSION);
-		// 	$config['file_name'] = rand() . "." . $extension;
-		// 	$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		// 	$config['max_size'] = '1024';
-		// 	$config['upload_path'] = './assets/img/pinjaman';
-		// 	$config['image_width'] = 800;
-		// 	$config['image_height'] = 600;
 
-		// 	$this->load->library('upload', $config);
-		// 	if (!$this->upload->do_upload('gambar')) {
-		// 		echo $this->upload->display_errors();
-		// 		die;
-		// 	} else {
-		// 		$upload_image = $this->upload->data('file_name');
-		// 		//$uploadedImage = $this->upload->data();
-		// 		$this->resizeImage($upload_image);
-		// 	}
-		// }
-		// //gambar2
-		// if ($upload_image2 = '') {
-		// 	echo $this->upload->display_errors();
-		// } else {
-		// 	$filename = $_FILES['gambar2']['name'];
-		// 	$extension = pathinfo($filename, PATHINFO_EXTENSION);
-		// 	$config['file_name'] = rand() . "." . $extension;
-		// 	$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		// 	$config['max_size'] = '1024';
-		// 	$config['upload_path'] = './assets/img/pinjaman';
-
-		// 	$this->load->library('upload', $config);
-		// 	if (!$this->upload->do_upload('gambar2')) {
-		// 		echo $this->upload->display_errors();
-		// 		die;
-		// 	} else {
-		// 		$upload_image2 = $this->upload->data('file_name');
-		// 		//  $uploadedImage = $this->upload->data();
-		// 		$this->resizeImage($upload_image2);
-		// 	}
-		// }
-		// //gambar3
-		// if ($upload_image3 = '') {
-		// 	echo $this->upload->display_errors();
-		// } else {
-		// 	$filename = $_FILES['gambar3']['name'];
-		// 	$extension = pathinfo($filename, PATHINFO_EXTENSION);
-		// 	$config['file_name'] = rand() . "." . $extension;
-		// 	$config['allowed_types'] = 'gif|jpg|png|jpeg';
-		// 	$config['max_size'] = '1024';
-		// 	$config['upload_path'] = './assets/img/pinjaman';
-
-		// 	$this->load->library('upload', $config);
-		// 	if (!$this->upload->do_upload('gambar3')) {
-		// 		echo $this->upload->display_errors();
-		// 		die;
-		// 	} else {
-		// 		$upload_image3 = $this->upload->data('file_name');
-		// 		//$uploadedImage = $this->upload->data();
-		// 		$this->resizeImage($upload_image3);
-		// 	}
-		// }
-
-		// $data = [
-		// 	'email' => $mail,
-		// 	'nama' => $nm,
-		// 	'kegiatan_pinjaman' => $kgt_pjm,
-		// 	'ruang_pinjaman' => $rg_pjm,
-		// 	'layout_pinjaman' => $ly_pjm,
-		// 	'waktu_mulai' => $strat_pjm,
-		// 	'tanggal_pjm' => $tgl_pjm
-		// 	'gambar' => $upload_image,
-		// 	'gambar2' => $upload_image2,
-		// 	'gambar3' => $upload_image3
-		// ];
-
+		$data_agenda = [
+			'tanggal_mulai' => $tgl_mulai,
+			'kegiatan' => $kgt_pjm,
+			'waktu_mulai' => $strat_pjm,
+			'waktu_akhir' => $end_pjm,
+			'waktu_buat' => $tgl_req,
+			'peminjam' => $mail
+		];
+		
 		$this->db->insert('tb_pinjaman', $data);
-
-		// $this->_sendEmail($nm, $kgt_pjm, $rg_pjm, $ly_pjm, $strat_pjm, $tgl_pjm);
+		$this->db->insert('tb_agenda', $data_agenda);
 
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
         <div class="container">
 			<div class="alert-icon">
 				<i class="now-ui-icons ui-2_like"></i>
 			</div>
-			<strong>' . $this->input->post('nama')  . '</strong> pinjaman Anda Berhasil Diajukan.
+			<strong>' . $this->input->post('nama')  . '</strong>, pinjaman Anda Berhasil Diajukan.
 				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 					<span aria-hidden="true"><i class="ki ki-close"></i></span>
 				</button>
