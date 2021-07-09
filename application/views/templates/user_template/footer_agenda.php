@@ -172,7 +172,7 @@
                                 title: '<?= $a['kegiatan'] ?>',
                                 start: '<?= substr($a['tanggal_mulai'], 0, 7) ?>' + '<?= substr($a['tanggal_mulai'], 7, 3) ?>T<?= $a['waktu_mulai'] ?>',
                                 end: '<?= substr($a['tanggal_mulai'], 0, 7) ?>' + '<?= substr($a['tanggal_mulai'], 7, 3) ?>T<?= $a['waktu_akhir'] ?>',
-                                <?php if ($a['peminjam'] == 'cocmarvel10@gmail.com') : ?>
+                                <?php if ($a['peminjam'] == $user['email']) : ?>
                                     className: "fc-event-light fc-event-solid-primary"
                                 <?php endif; ?>
                             },

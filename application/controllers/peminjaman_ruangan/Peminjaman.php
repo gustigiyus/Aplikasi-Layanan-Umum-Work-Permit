@@ -13,6 +13,7 @@ class Peminjaman extends CI_Controller
 		$this->load->model('Profile_model', 'PM');
 		$this->load->model('Pinjaman_model', 'Pinjaman');
 		$data['role_user'] = $this->PM->role_user()->result_array();
+		$data['detail_user'] = $this->PM->detailuser()->result_array();
 		$data['ruangan'] = $this->Pinjaman->getRuangan();
 		$data['pinjaman'] = $this->db->get('tb_pinjaman')->result_array();
 		

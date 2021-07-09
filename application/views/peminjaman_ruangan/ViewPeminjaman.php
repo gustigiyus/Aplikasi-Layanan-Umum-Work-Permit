@@ -204,23 +204,23 @@
 					<div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="nama" style="color: black; float: left;">Nama Lengkap</label>
-							<input type="text" class="form-control" name="nama" value="<?= $this->session->userdata('name'); ?>" readonly>
+							<input type="text" class="form-control" name="nama" value="<?= $detail_user[0]['nama']; ?>" readonly>
 						</div>
 						<div class="form-group col-md-6">
                             <label for="email" style="color: black; float: left;">Email</label>
-                            <input type="email" class="form-control" name="email" value="<?= $this->session->userdata('email'); ?>" readonly>
+                            <input type="email" class="form-control" name="email" value="<?= $detail_user[0]['email']; ?>" readonly>
 						</div>
                         <div class="form-group col-md-6">
                             <label class="form-control-label" style="color: black; float: left;">NIP</label>
-							<input autoborrlete="off" type="text" class="form-control" name="nip">
+							<input autoborrlete="off" type="text" class="form-control" name="nip" value="<?= $detail_user[0]['nip']; ?>" readonly>
 						</div>
                         <div class="form-group col-md-6">
                             <label class="form-control-label" style="color: black; float: left;">HP</label>
-							<input autoborrlete="off" type="text" class="form-control" name="hp">
+							<input autoborrlete="off" type="text" class="form-control" name="hp" value="<?= $detail_user[0]['nomer_telepon']; ?>" readonly>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="form-control-label" style="color: black; float: left;">Divisi</label>
-							<input autoborrlete="off" type="text" class="form-control" name="divisi">
+							<input autoborrlete="off" type="text" class="form-control" name="divisi" value="<?= $detail_user[0]['divisi']; ?>" readonly>
                         </div>
 					</div>
 
@@ -240,7 +240,7 @@
                                 <?php 
                                     foreach($ruangan as $r)
                                     { 
-                                        echo '<option value="'.$r->tipe_ruangan.'">'.$r->tipe_ruangan.'</option>';
+                                        echo '<option value="'.$r->tipe_ruangan.'">'.$r->tipe_ruangan.' (Max Capacity: '.$r->kapasitas_ruangan.') </option>';
                                     }
                                 ?>
                             </select>

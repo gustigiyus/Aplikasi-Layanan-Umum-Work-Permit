@@ -13,7 +13,8 @@ class Agenda extends CI_Controller
         $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
         $this->load->model('Profile_model', 'PM');
         $data['role_user'] = $this->PM->role_user()->result_array();
-        $data['agenda'] = $this->db->get_where('tb_agenda', ['peminjam' => $this->session->userdata('email')])->result_array();
+        // $data['agenda'] = $this->db->get_where('tb_agenda', ['peminjam' => $this->session->userdata('email')])->result_array();
+        $data['agenda'] = $this->db->get_where('tb_agenda')->result_array();
 
         //load view
         $this->load->view('templates/user_template/header_user', $data);
