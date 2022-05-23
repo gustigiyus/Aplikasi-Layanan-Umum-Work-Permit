@@ -15,9 +15,13 @@ class Auth extends CI_Controller
         if ($this->session->userdata('email')) {
             $user = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
             if ($user['role_id'] == 1) {
-                redirect('user');
+                redirect('admin');
             } elseif ($user['role_id'] == 2) {
                 redirect('beranda');
+            } elseif ($user['role_id'] == 5) {
+                redirect('beranda');
+            } elseif ($user['role_id'] == 3) {
+                redirect('user');
             }
         }
 
@@ -60,6 +64,13 @@ class Auth extends CI_Controller
                         redirect('admin');
                     } elseif ($user['role_id'] == 2) {
                         // Karyawan
+                        if ($password == '1234') {
+                            redirect('profile/changepassword');
+                        } else {
+                            redirect('beranda');
+                        }
+                    } elseif ($user['role_id'] == 5) {
+                        // Atasan
                         if ($password == '1234') {
                             redirect('profile/changepassword');
                         } else {
@@ -230,38 +241,17 @@ class Auth extends CI_Controller
                 'date_created' => time()
             ];
 
-            $upload_image3 = $_FILES['ft_ktp'];
-            //gambar 1
-            if ($upload_image3 = '') {
-                echo $this->upload->display_errors();
-            } else {
-
-                $config['allowed_types'] = 'gif|jpg|png|jpeg';
-                $config['max_size'] = '2048';
-                $config['upload_path'] = './assets/img/ktp';
-
-                $this->load->library('upload', $config);
-                if (!$this->upload->do_upload('ft_ktp')) {
-                    echo $this->upload->display_errors();
-                    die;
-                } else {
-                    $upload_image3 = $this->upload->data('file_name');
-                }
-            }
-
             // Kirim ke table detail user
             $data2 = [
                 'email' => htmlspecialchars($email),
-                'alamat1' => $this->input->post('alm1'),
-                'alamat2' => $this->input->post('alm2'),
-                'nama_perusahaan' => $this->input->post('nm_perushaan'),
-                'kota' => $this->input->post('nm_kota'),
+                'nama' => htmlspecialchars($this->input->post('name', true)),
+                'alamat_rumah' => $this->input->post('alm1'),
+                'alamat_kantor' => $this->input->post('alm2'),
+                'nama_kantor' => $this->input->post('nm_perushaan'),
                 'tanggal_lahir' => $this->input->post('tgl_lahir'),
-                'tempat_lahir' => $this->input->post('tmp_lahir'),
                 'jenis_kelamin' => $this->input->post('js_kelamin'),
                 'nomer_telepon' => $this->input->post('no_tlp'),
-                'nomer_ktp' => $this->input->post('no_ktp'),
-                'foto_ktp' => $upload_image3
+                'nomor_ktp' => $this->input->post('no_ktp')
             ];
 
             // Menyiapkan Token

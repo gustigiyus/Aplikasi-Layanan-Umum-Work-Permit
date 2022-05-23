@@ -3,405 +3,315 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Peminjaman extends CI_Controller
 {
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->library('form_validation');
+	}
 
-	//Menampilkan Halaman Pinjaman
+	//Menampilkan Halaman Peminjaman
 	public function index()
 	{
 		$data['title'] = 'Peminjaman Ruangan';
 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 		$data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
+
 		$this->load->model('Profile_model', 'PM');
-		$this->load->model('Pinjaman_model', 'Pinjaman');
 		$data['role_user'] = $this->PM->role_user()->result_array();
 		$data['detail_user'] = $this->PM->detailuser()->result_array();
-		$data['ruangan'] = $this->Pinjaman->getRuangan();
-		$data['pinjaman'] = $this->db->get('tb_pinjaman')->result_array();
-		
+
+		$data['data_peminjaman'] = $this->db->get_where('tb_peminjaman_ruangan', ['email' => $this->session->userdata('email')])->result_array();
+
+		$data['layout_ruangan'] = $this->db->get('tb_master_layout_ruangan')->result_array();
+		$data['perlengkapan_ruangan'] = $this->db->get('tb_master_perlengkapan_ruangan')->result_array();
+
 		//load view
-        $this->load->view('templates/user_template/header_user', $data);
-        $this->load->view('templates/user_template/navbar_user', $data);
-        $this->load->view('peminjaman_ruangan/ViewPeminjaman', $data);
-        $this->load->view('templates/user_template/sidebar_modal_user', $data);
-        $this->load->view('templates/user_template/footer_user');
+		$this->load->view('templates/user_template/header_user', $data);
+		$this->load->view('templates/user_template/navbar_user', $data);
+		$this->load->view('umum/pengguna/peminjaman-ruangan/peminjaman.php', $data);
+		$this->load->view('templates/user_template/sidebar_modal_user', $data);
+		$this->load->view('templates/user_template/footer_user');
 	}
 
-	//Tambah pinjaman
-	public function addpinjaman()
+	//Tambah peminjaman
+	public function addpeminjaman()
 	{
-		$mail = $this->input->post('email');
-		$nm = $this->input->post('nama');
+		$no_pjm = $this->input->post('id_peminjaman_ruangan');
+		$nm = $this->input->post('nama_peminjaman');
+		$mail = $this->input->post('email_peminjaman');
 		$nip = $this->input->post('nip');
-		$hp = $this->input->post('hp');
 		$divisi = $this->input->post('divisi');
-		$kgt_pjm = $this->input->post('kegiatan_pinjaman');
-		$rg_pjm = $this->input->post('ruang_pinjaman');
-		$strat_pjm = $this->input->post('waktu_mulai');
-		$end_pjm = $this->input->post('waktu_akhir');
+		$ext_hp = $this->input->post('ext/hp');
+		$kgt_pjm = $this->input->post('kegiatan_pinjam');
+		$rng_pjm = $this->input->post('ruang_pinjaman');
+		$jns_lyt = $this->input->post('jenis_layout');
+		$mulai_pjm = $this->input->post('waktu_mulai');
+		$selesai_pjm = $this->input->post('waktu_selesai');
 		$tgl_mulai = $this->input->post('tanggal_mulai');
+		$tgl_selesai = $this->input->post('tanggal_selesai');
+		$jml_org = $this->input->post('jml_orang');
+		$prlkp = $this->input->post('perlengkapan');
+		$sts_pjm = $this->input->post('status_peminjaman');
+		$nama_atasan = $this->input->post('nm_atasan');
+		$email_atasan = $this->input->post('em_atasan');
+		$nomor_atasan = $this->input->post('no_atasan');
 		$tgl_req = date('Y-m-d H:i:s');
-		$prl = $this->input->post('perlengkapan');
 
-		$data = [
-			'email' => $mail,
+		$data_pinjam_ruangan = [
+			'no_peminjaman' => $no_pjm,
 			'nama' => $nm,
+			'email' => $mail,
 			'nip' => $nip,
-			'hp' => $hp,
 			'divisi' => $divisi,
-			'kegiatan_pinjaman' => $kgt_pjm,
-			'ruang_pinjaman' => $rg_pjm,
-			'waktu_mulai' => $strat_pjm,
-			'waktu_selesai' => $end_pjm,
+			'ext/hp' => $ext_hp,
+			'nama_kegiatan' => $kgt_pjm,
+			'ruangan' => $rng_pjm,
+			'jenis_layout' => $jns_lyt,
+			'waktu_mulai' => $mulai_pjm,
+			'waktu_selesai' => $selesai_pjm,
 			'tanggal_mulai' => $tgl_mulai,
-			'tgl_request' => $tgl_req,
-			'perlengkapan' => substr(implode(', ', $prl), 0)
+			'tanggal_selesai' => $tgl_selesai,
+			'jumlah_orang' => $jml_org,
+			'tanggal_request' => $tgl_req,
+			'status_peminjaman' => $sts_pjm,
+			'nama_atasan' => $nama_atasan,
+			'email_atasan' => $email_atasan,
+			'nomor_atasan' => $nomor_atasan,
+			'perlengkapan' => substr(implode(', ', $prlkp), 0)
 		];
 
 		$data_agenda = [
-			'tanggal_mulai' => $tgl_mulai,
+			'no_peminjaman' => $no_pjm,
 			'kegiatan' => $kgt_pjm,
-			'waktu_mulai' => $strat_pjm,
-			'waktu_akhir' => $end_pjm,
+			'tanggal_mulai' => $tgl_mulai,
+			'tanggal_selesai' => $tgl_selesai,
+			'waktu_mulai' => $mulai_pjm,
+			'waktu_selesai' => $selesai_pjm,
 			'waktu_buat' => $tgl_req,
-			'peminjam' => $mail
+			'nama_peminjam' => $nm
 		];
-		
-		$this->db->insert('tb_pinjaman', $data);
+
+		$this->db->insert('tb_peminjaman_ruangan', $data_pinjam_ruangan);
 		$this->db->insert('tb_agenda', $data_agenda);
 
-		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
-        <div class="container">
-			<div class="alert-icon">
-				<i class="now-ui-icons ui-2_like"></i>
-			</div>
-			<strong>' . $this->input->post('nama')  . '</strong>, pinjaman Anda Berhasil Diajukan.
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true"><i class="ki ki-close"></i></span>
-				</button>
-			</div>
-        </div>');
+		$this->session->set_flashdata('message', $this->input->post('nama_peminjaman') . ' Data peminjaman ruangan anda berhasil diajukan');
 		redirect('peminjaman_ruangan/Peminjaman');
 	}
 
-	// public function resizeImage($filename)
-	// {
-	// 	$source_path = './assets/img/pinjaman/' . $filename;
-	// 	$target_path = './assets/img/pinjaman';
-	// 	$config_manip = array(
-	// 		'image_library' => 'gd2',
-	// 		'source_image' => $source_path,
-	// 		'new_image' => $target_path,
-	// 		'maintain_ratio' => TRUE,
-	// 		'width' => 800
+	//Edit Peminjaman
+	public function editpeminjaman($id_peminjaman)
+	{
+		$data['title'] = 'Edit Peminjaman Ruangan';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
 
-	// 	);
+		$this->load->model('Profile_model', 'PM');
+		$data['role_user'] = $this->PM->role_user()->result_array();
+		$data['detail_user'] = $this->PM->detailuser()->result_array();
 
-	// 	$this->load->library('image_lib', $config_manip);
-	// 	if (!$this->image_lib->resize()) {
-	// 		echo $this->image_lib->display_errors();
-	// 	}
-	// 	$this->image_lib->clear();
-	// }
+		$data['data_peminjaman'] = $this->db->get_where('tb_peminjaman_ruangan', ['no_peminjaman' => $id_peminjaman])->result_array();
+		$data['layout_ruangan'] = $this->db->get('tb_master_layout_ruangan')->result_array();
+		$data['perlengkapan_ruangan'] = $this->db->get('tb_master_perlengkapan_ruangan')->result_array();
 
-// 	private function _sendEmail($nama, $kegiatan_pinjaman, $ruang_pinjaman, $layout_pinjaman, $waktu_mulai, $tanggal_pinjaman)
-// 	{
+		$this->form_validation->set_rules('edit_id_peminjaman_ruangan', 'ID Peminjaman', 'required|trim');
 
-// 		//configure email settings
-// 		$config['protocol'] = 'smtp';
-// 		$config['smtp_host'] = 'ssl://smtp.gmail.com';
-// 		$config['smtp_port'] = 465;
-// 		$config['smtp_user'] = 'cocmarvel5@gmail.com';
-// 		$config['smtp_pass'] = 'draxx123';
-// 		$config['mailtype'] = 'html';
-// 		$config['charset'] = 'utf-8';
-// 		$config['wordwrap'] = TRUE;
-// 		$config['newline'] = "\r\n"; //use double quotes
-// 		$this->load->library('email', $config);
-// 		$this->email->initialize($config);
+		if ($this->form_validation->run() == false) {
+			//load view
+			$this->load->view('templates/user_template/header_user', $data);
+			$this->load->view('templates/user_template/navbar_user', $data);
+			$this->load->view('umum/pengguna/peminjaman-ruangan/edit_peminjaman', $data);
+			$this->load->view('templates/user_template/sidebar_modal_user', $data);
+			$this->load->view('templates/user_template/footer_user', $data);
+		} else {
+			//Validasi Success
+			$no_pjm = $this->input->post('edit_id_peminjaman_ruangan');
+			$nm = $this->input->post('edit_nama_peminjaman');
+			$mail = $this->input->post('edit_email_peminjaman');
+			$nip = $this->input->post('edit_nip');
+			$divisi = $this->input->post('edit_divisi');
+			$ext_hp = $this->input->post('edit_ext/hp');
+			$kgt_pjm = $this->input->post('edit_kegiatan_pinjam');
+			$rng_pjm = $this->input->post('edit_ruang_pinjaman');
+			$jns_lyt = $this->input->post('edit_jenis_layout');
+			$mulai_pjm = $this->input->post('edit_waktu_mulai');
+			$selesai_pjm = $this->input->post('edit_waktu_selesai');
+			$tgl_mulai = $this->input->post('edit_tanggal_mulai');
+			$tgl_selesai = $this->input->post('edit_tanggal_selesai');
+			$jml_org = $this->input->post('edit_jml_orang');
+			$prlkp = $this->input->post('edit_perlengkapan');
+			$sts_pjm = $this->input->post('edit_status_peminjaman');
+			$tgl_req = date('Y-m-d H:i:s');
 
-// 		$this->load->library('email', $config);
-// 		$tanggal = date("j F Y");
-// 		$link = base_url('landingpage/login');
-// 		// $foto1 = base_url('assets/img/pinjaman/') . $upload_image1;
-// 		// $foto2 = base_url('assets/img/pinjaman/') . $upload_image2;
-// 		// $foto3 = base_url('assets/img/pinjaman/') . $upload_image3;
-// 		$this->email->from('cocmarvel5@gmail.com', 'Admin PT INTI pinjaman');
-// 		$this->email->to('gustiggt123@gmail.com');
-// 		// Lampiran email, isi dengan url/path file
-// 		// $this->email->attach($foto1);
-// 		// $this->email->attach($foto2);
-// 		// $this->email->attach($foto3);
-// 		$this->email->subject('Notifikasi pinjaman Baru');
-// 		$this->email->message("pinjaman Baru Telah Dibuat Oleh <strong>$nama</strong> Dengan : <br><br>
-//         <strong>kegiatan_pinjaman</strong>  : $kegiatan_pinjaman <br>
-//         <strong>ruang_pinjaman</strong> : $ruang_pinjaman <br>
-//         <strong>layout_pinjaman</strong> : $layout_pinjaman <br>
-//         <strong>Tingkat Bahaya</strong> : $waktu_mulai <br>
-//         <strong>Tanggal Diajukan</strong> : $tanggal_pinjaman <br><br>
-//         Dikirim Pada Tanggal : $tanggal <br>
-//         Klik <strong><a href='$link' target='_blank' rel='noopener'>disini</a></strong> untuk Login ke aplikasi.");
+			$data_pinjam_ruangan = [
+				'no_peminjaman' => $no_pjm,
+				'nama' => $nm,
+				'email' => $mail,
+				'nip' => $nip,
+				'divisi' => $divisi,
+				'ext/hp' => $ext_hp,
+				'nama_kegiatan' => $kgt_pjm,
+				'ruangan' => $rng_pjm,
+				'jenis_layout' => $jns_lyt,
+				'waktu_mulai' => $mulai_pjm,
+				'waktu_selesai' => $selesai_pjm,
+				'tanggal_mulai' => $tgl_mulai,
+				'tanggal_selesai' => $tgl_selesai,
+				'jumlah_orang' => $jml_org,
+				'tanggal_request' => $tgl_req,
+				'status_peminjaman' => $sts_pjm,
+				'perlengkapan' => substr(implode(', ', $prlkp), 0)
+			];
 
+			$data_agenda = [
+				'no_peminjaman' => $no_pjm,
+				'kegiatan' => $kgt_pjm,
+				'tanggal_mulai' => $tgl_mulai,
+				'tanggal_selesai' => $tgl_selesai,
+				'waktu_mulai' => $mulai_pjm,
+				'waktu_selesai' => $selesai_pjm,
+				'waktu_buat' => $tgl_req,
+				'nama_peminjam' => $nm
+			];
 
-// 		if ($this->email->send()) {
-// 			return true;
-// 		} else {
-// 			echo $this->email->print_debugger();
-// 			die;
-// 		}
-// 	}
+			$this->db->where('no_peminjaman', $no_pjm);
+			$this->db->replace('tb_peminjaman_ruangan', $data_pinjam_ruangan);
+			$this->db->where('no_peminjaman', $no_pjm);
+			$this->db->update('tb_agenda', $data_agenda);
 
-// 	//Edit pinjaman
-// 	public function editpinjaman($edt_id)
-// 	{
-// 		$id = $edt_id;
-// 		$mail = $this->input->post('email');
-// 		$nm = $this->input->post('nama');
-// 		$kgt_pjm = $this->input->post('kegiatan_pinjaman_pinjaman');
-// 		$rg_pjm = $this->input->post('ruang_pinjaman');
-// 		$ly_pjm = $this->input->post('layout_pinjaman');
-// 		$strat_pjm = $this->input->post('waktu_mulai');
-// 		$tgl_ajk = $this->input->post('tanggal_ajukan');
+			$this->session->set_flashdata('message', $this->input->post('edit_nama_peminjaman') . ' Data peminjaman ruangan anda berhasil diedit');
+			redirect('peminjaman_ruangan/Peminjaman');
+		}
+	}
 
-// 		$upload_image1 = $_FILES['new_image0'];
-// 		$upload_image2 = $_FILES['new_image1'];
-// 		$upload_image3 = $_FILES['new_image2'];
-// 		$old_image1 = $this->input->post('old_image1');
-// 		$old_image2 = $this->input->post('old_image2');
-// 		$old_image3 = $this->input->post('old_image3');
-// 		$gambar = [$upload_image1, $upload_image2, $upload_image3];
-// 		$gambarlama = [$old_image1, $old_image2, $old_image3];
-// 		for ($g = 0; $g < 3; $g++) {
-// 			if ($gambar[$g]['name'] != '') {
-// 				$filename = $gambar[$g]['name'];
-// 				$extension = pathinfo($filename, PATHINFO_EXTENSION);
-// 				$config['file_name'] = rand() . "." . $extension;
-// 				$config['allowed_types'] = 'gif|jpg|png';
-// 				$config['max_size'] = '1024';
-// 				$config['upload_path'] = './assets/img/pinjaman/';
-// 				$this->load->library('upload', $config);
-// 				if ($this->upload->do_upload('new_image' . $g)) {
-// 					$upload_image[] = $this->upload->data('file_name');
-// 					unlink('./assets/img/pinjaman/' . $gambarlama[$g]);
-// 				} else {
-// 					$upload_image[$g] = $gambarlama[$g];
-// 				}
-// 			} else {
-// 				$upload_image[$g] = $gambarlama[$g];
-// 			}
-// 		}
+	//////////////////////////////////////////////// BAGIAN ATASAN //////////////////////////////////////////
 
+	//Menampilkan Halaman Peminjaman
+	public function kelola_peminjaman()
+	{
+		$data['title'] = 'Kelola Peminjaman';
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
 
-// 		$data = [
-// 			'id' => $id,
-// 			'email' => $mail,
-// 			'nama' => $nm,
-// 			'kegiatan_pinjaman_pinjaman' => $kgt_pjm,
-// 			'ruang_pinjaman' => $rg_pjm,
-// 			'layout_pinjaman' => $ly_pjm,
-// 			'waktu_mulai' => $strat_pjm,
-// 			'tanggal_ajukan' => $tgl_ajk,
-// 			'gambar' => $upload_image[0],
-// 			'gambar2' => $upload_image[1],
-// 			'gambar3' => $upload_image[2]
-// 		];
-// 		$this->db->where('id', $edt_id);
-// 		$this->db->update('tb_pinjaman', $data);
+		$this->load->model('Profile_model', 'PM');
+		$data['role_user'] = $this->PM->role_user()->result_array();
+		$data['detail_user'] = $this->PM->detailuser()->result_array();
 
-// 		$this->session->set_flashdata('message', '<div class="alert alert-custom alert-light-success fade show mb-5" role="alert">
-//                                     <div class="alert-icon"><i class="flaticon-warning"></i></div>
-//                                     <div class="alert-text">Detail pinjaman Berhasil Diubah!</div>
-//                                     <div class="alert-close">
-// 										<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-// 											<span aria-hidden="true"><i class="ki ki-close"></i></span>
-// 										</button>
-//                                     </div>
-//                                     </div>');
-// 		redirect('Pinjaman');
-// 	}
+		$data['data_peminjaman'] = $this->db->get_where('tb_peminjaman_ruangan')->result_array();
 
-// 	//Edit Status pinjaman Buat Admin
-// 	public function editStatuspinjaman()
-// 	{
-// 		$id = $this->input->post('id');
-// 		$sts_cmp = $this->input->post('status_pinjaman');
+		//load view
+		$this->load->view('templates/user_template/header_user', $data);
+		$this->load->view('templates/user_template/navbar_user', $data);
+		$this->load->view('umum/atasan/peminjaman-ruangan/peminjaman.php', $data);
+		$this->load->view('templates/user_template/sidebar_modal_user', $data);
+		$this->load->view('templates/user_template/footer_user');
+	}
 
-// 		$this->db->set('status_pinjaman', $sts_cmp);
-// 		$this->db->where('id', $id);
-// 		$this->db->update('tb_pinjaman');
+	//Menampilkan Halaman Kelola Permintaan Properti (Karyawan)
+	public function edit_persetujuan($no_peminjaman)
+	{
+		$data['title'] = 'Edit Persetujuan Peminjaman Ruangan Atasan';
 
-// 		if ($sts_cmp == 'Selesai') {
-// 			$emailuser = $this->input->post('email');
-// 			$nm = $this->input->post('nama');
-// 			$kgt_pjm = $this->input->post('kegiatan_pinjaman_pinjaman');
-// 			$rg_pjm = $this->input->post('ruang_pinjaman');
-// 			$ly_pjm = $this->input->post('layout_pinjaman');
-// 			$strat_pjm = $this->input->post('waktu_mulai');
-// 			$tgl_ajk = $this->input->post('tanggal_ajukan');
-// 			$upload_image = $this->input->post('gambar');
-// 			$upload_image2 = $this->input->post('gambar2');
-// 			$upload_image3 = $this->input->post('gambar3');
+		$data['no_peminjaman'] = $no_peminjaman;
 
-// 			$nm_kontrak = $this->input->post('nm_kontrak');
-// 			$nm_jawab = $this->input->post('nm_jawab');
-// 			$no_tlp = $this->input->post('no_tlp');
-// 			$rg_pjm_pekrj = $this->input->post('rg_pjm_pekrj');
-// 			$wk_awal = $this->input->post('wk_awal');
-// 			$wk_akhir = $this->input->post('wk_akhir');
-// 			$tg_akhir = $this->input->post('tg_akhir');
-// 			$emailtten = $this->db->get_where('user', ['name' => $nm_kontrak])->row_array();
-// 			$emailtenant = $emailtten['email'];
+		//Data Sesuai Session Email User 
+		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+		$data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
 
-// 			$jumlah = count($this->input->post('sblm'));
-// 			for ($i = 0; $i < $jumlah; $i++) {
-// 				$sebelum_kerja = $this->input->post('sblm');
-// 			}
-// 			$jumlah2 = count($this->input->post('ssdh'));
-// 			for ($i = 0; $i < $jumlah2; $i++) {
-// 				$sesudah_kerja = $this->input->post('ssdh');
-// 			}
+		//Mengambil data dari model
+		$this->load->model('Profile_model', 'PM');
+		$this->load->model('Permintaanlayanan_model', 'PRMLYN');
 
-// 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Status berhasil diubah!</div>');
-// 			$this->_sendEmailToUser($emailuser, $nm, $kgt_pjm, $rg_pjm, $ly_pjm, $strat_pjm, $tgl_ajk, $upload_image, $upload_image2, $upload_image3);
-// 			$this->_sendEmailToTenant($emailtenant, $nm, $nm_kontrak, $nm_jawab, $no_tlp, $rg_pjm_pekrj, $wk_awal, $wk_akhir, $tg_akhir, $sebelum_kerja, $sesudah_kerja);
-// 			redirect('Pinjaman');
-// 		} else {
-// 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Status berhasil diubah!</div>');
-// 			redirect('Pinjaman');
-// 		}
-// 	}
+		//Data Profile dan Role User
+		$data['role_user'] = $this->PM->role_user()->result_array();
+		$data['detail_user'] = $this->PM->detailuser()->result_array();
 
-// 	private function _sendEmailToUser($emailuser, $nama, $kegiatan_pinjaman, $ruang_pinjaman, $layout_pinjaman, $waktu_mulai, $tanggal_ajukan, $upload_image1, $upload_image2, $upload_image3)
-// 	{
+		//Data Peminjaman Ruangan
+		$data['data_peminjaman'] = $this->db->get_where('tb_peminjaman_ruangan', ['no_peminjaman' => $no_peminjaman])->result_array();
 
-// 		//configure email settings
-// 		$config['protocol'] = 'smtp';
-// 		$config['smtp_host'] = 'ssl://smtp.gmail.com';
-// 		$config['smtp_port'] = 465;
-// 		$config['smtp_user'] = 'cocmarvel5@gmail.com';
-// 		$config['smtp_pass'] = 'draxx123';
-// 		$config['mailtype'] = 'html';
-// 		$config['charset'] = 'utf-8';
-// 		$config['wordwrap'] = TRUE;
-// 		$config['newline'] = "\r\n"; //use double quotes
-// 		$this->load->library('email', $config);
-// 		$this->email->initialize($config);
+		$this->load->view('templates/user_template/header_user', $data);
+		$this->load->view('templates/user_template/navbar_user', $data);
+		$this->load->view('umum/atasan/peminjaman-ruangan/kelola_peminjaman.php', $data);
+		$this->load->view('templates/user_template/sidebar_modal_user', $data);
+		$this->load->view('templates/user_template/footer_user', $data['no_peminjaman']);
+	}
 
-// 		$this->load->library('email', $config);
-// 		$tanggal = date("j F Y");
-// 		$link = base_url('landingpage/login');
-// 		$foto1 = base_url('assets/img/pinjaman/') . $upload_image1;
-// 		$foto2 = base_url('assets/img/pinjaman/') . $upload_image2;
-// 		$foto3 = base_url('assets/img/pinjaman/') . $upload_image3;
-// 		$this->email->from('cocmarvel5@gmail.com', 'Admin PT INTI pinjaman');
-// 		$this->email->to($emailuser);
-// 		// Lampiran email, isi dengan url/path file
-// 		$this->email->attach($foto1);
-// 		$this->email->attach($foto2);
-// 		$this->email->attach($foto3);
-// 		$this->email->subject('Notifikasi pinjaman');
-// 		$this->email->message("pinjaman Dibuat Oleh <strong>$nama</strong> Dengan : <br><br>
-//         <strong>kegiatan_pinjaman</strong>  : $kegiatan_pinjaman <br>
-//         <strong>ruang_pinjaman</strong> : $ruang_pinjaman <br>
-//         <strong>layout_pinjaman</strong> : $layout_pinjaman <br>
-//         <strong>Tingkat Bahaya</strong> : $waktu_mulai <br>
-//         <strong>Tanggal Diajukan</strong> : $tanggal_ajukan <br><br>
-//         <strong>Status pinjaman: Selesai </strong><br><br>
-//         Dikirim Pada Tanggal : $tanggal <br>
-//         Klik <strong><a href='$link' target='_blank' rel='noopener'>disini</a></strong> untuk Login ke aplikasi dan mendowload PDF.");
+	//Proses Closing Status Peminjaman Ruangan (Atasan)
+	public function proses_kelola_peminjaman_close()
+	{
+		if (isset($_POST["no_peminjaman"])) {
 
-// 		if ($this->email->send()) {
-// 			return true;
-// 		} else {
-// 			echo $this->email->print_debugger();
-// 			die;
-// 		}
-// 	}
+			$no_peminjaman = $this->input->post('no_peminjaman');
+			$status_peminjaman = $this->input->post('status_peminjaman');
 
-// 	private function _sendEmailToTenant($emailt, $nama, $nm_kontrak, $nm_jawab, $no_tlp, $rg_pjm_pekrj, $wk_awal, $wk_akhir, $tg_akhir, $sebelum_kerja, $sesudah_kerja)
-// 	{
+			$data = [
+				'status_peminjaman' => $status_peminjaman,
+			];
 
-// 		//configure email settings
-// 		$config['protocol'] = 'smtp';
-// 		$config['smtp_host'] = 'ssl://smtp.gmail.com';
-// 		$config['smtp_port'] = 465;
-// 		$config['smtp_user'] = 'cocmarvel5@gmail.com';
-// 		$config['smtp_pass'] = 'draxx123';
-// 		$config['mailtype'] = 'html';
-// 		$config['charset'] = 'utf-8';
-// 		$config['wordwrap'] = TRUE;
-// 		$config['newline'] = "\r\n"; //use double quotes
-// 		$this->load->library('email', $config);
-// 		$this->email->initialize($config);
+			$this->db->where('no_peminjaman', $no_peminjaman);
+			$this->db->update('tb_peminjaman_ruangan', $data);
+		}
+	}
 
-// 		$this->load->library('email', $config);
-// 		$this->email->clear(TRUE);
-// 		$tanggal = date("j F Y");
-// 		$link = base_url('landingpage/login');
-// 		$this->email->from('cocmarvel5@gmail.com', 'Admin PT INTI WORKPERMIT');
-// 		$this->email->to($emailt);
-// 		// Lampiran email, isi dengan url/path file
-// 		$jumlah = count($sebelum_kerja);
-// 		for ($i = 0; $i < $jumlah; $i++) {
-// 			$foto = base_url('assets/img/pekerjaan/awal/') . $sebelum_kerja[$i];
-// 			$this->email->attach($foto);
-// 		}
-// 		$jumlah1 = count($sesudah_kerja);
-// 		for ($i = 0; $i < $jumlah1; $i++) {
-// 			$foto1 = base_url('assets/img/pekerjaan/akhir/') . $sesudah_kerja[$i];
-// 			$this->email->attach($foto1);
-// 		}
-// 		$this->email->subject('Notifikasi Workpermit');
-// 		$this->email->message("pinjaman Dibuat Oleh <strong>$nama</strong> yang dikerjakan oleh <strong>$nm_kontrak</strong> Dengan : <br><br>
-//         <strong>Penanggung Jawab</strong>  : $nm_jawab <br>
-//         <strong>Nomor Telepon</strong> : $no_tlp <br>
-//         <strong>ruang_pinjaman Pekerjaan</strong> : $rg_pjm_pekrj <br>
-//         <strong>Yang dikerjakan pada :</strong><br>
-//         <strong>Tanggal :</strong> $tg_akhir <br>
-//         <strong>Waktu Mulai Bekerja</strong> : $wk_awal <br>
-//         <strong>Waktu Akhir Bekerja</strong> : $wk_akhir <br>
-//         <br>
-//         Dikirim Pada Tanggal : $tanggal <br>
-//         Klik <strong><a href='$link' target='_blank' rel='noopener'>disini</a></strong> untuk Login ke aplikasi dan mendowload Laporan Izin Kerja.");
+	//Proses Cencel Status Peminjaman Ruangan (Atasan)
+	public function proses_kelola_peminjaman_cencel_request($no_peminjaman)
+	{
+		$data = [
+			'status_peminjaman' => 'Cencel Request',
+		];
 
+		$this->db->where('no_peminjaman', $no_peminjaman);
+		$this->db->update('tb_peminjaman_ruangan', $data);
 
-// 		if ($this->email->send()) {
-// 			return true;
-// 		} else {
-// 			echo $this->email->print_debugger();
-// 			die;
-// 		}
-// 	}
+		$this->session->set_flashdata('message', 'Data peminjaman ruangan berhasil ditolak');
+		redirect('peminjaman_ruangan/Peminjaman/kelola_peminjaman');
+	}
 
+	//Proses Hapus Peminjaman Ruangan (Atasan)
+	public function proses_hapus_peminjaman($no_peminjaman)
+	{
 
+		$this->db->where('no_peminjaman', $no_peminjaman);
+		$this->db->delete('tb_peminjaman_ruangan');
 
-// 	//Function Laporan
-// 	public function laporan()
-// 	{
-// 		$data['title'] = 'Laporan pinjaman';
-// 		$this->load->model('Profile_model', 'PM');
-// 		$data['role_user'] = $this->PM->role_user()->result_array();
-// 		$data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-// 		$data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
-// 		$data['pinjaman'] = $this->db->get_where('tb_pinjaman', ['email' => $this->session->userdata('email'), 'status_pinjaman' => 'Selesai'])->result_array();
-// 		$data['izin'] = $this->db->get('tb_izin_kerja')->result_array();
-// 		if ($this->session->userdata('role_id') == 4) {
-// 			$this->load->view('templates/user_template/header_user', $data);
-// 			$this->load->view('templates/user_template/navbar_user', $data);
-// 			$this->load->view('umum/pengguna/laporan', $data);
-// 			$this->load->view('templates/user_template/sidebar_modal_user', $data);
-// 			$this->load->view('templates/user_template/footer_user');
-// 		} elseif ($this->session->userdata('role_id') == 2) {
-// 			$this->load->view('templates/user_template/header_user', $data);
-// 			$this->load->view('templates/user_template/navbar_user', $data);
-// 			$this->load->view('umum/pengguna/laporan', $data);
-// 			$this->load->view('templates/user_template/sidebar_modal_user', $data);
-// 			$this->load->view('templates/user_template/footer_user');
-// 		} else {
-// 			$data['pinjaman'] = $this->db->get_where('tb_pinjaman', ['status_pinjaman' => 'Selesai'])->result_array();
-// 			$this->load->view('templates/header', $data);
-// 			$this->load->view('templates/sidebar', $data);
-// 			$this->load->view('templates/topbar', $data);
-// 			$this->load->view('laporan/admin', $data);
-// 			$this->load->view('templates/footer');
-// 		}
-// 	}
+		$this->db->where('no_peminjaman', $no_peminjaman);
+		$this->db->delete('tb_agenda');
+
+		$this->session->set_flashdata('message', 'Data peminjaman ruangan berhasil ditolak');
+		redirect('peminjaman_ruangan/Peminjaman/kelola_peminjaman');
+	}
+
+	//ADD TTD PEMINJAMAN
+	public function upload_ttd_peminjaman($no_ttd_peminjaman)
+	{
+		$config['upload_path']   = FCPATH . './assets/img/peminjaman_ruangan';
+		$config['allowed_types'] = 'jpg|png|jpeg';
+		$this->load->library('upload', $config);
+
+		if ($this->upload->do_upload('ttd_peminjaman')) {
+			$token_peminjaman = $this->input->post('token_TTD_Peminjaman');
+			$nama_TTD_peminjaman = $this->upload->data('file_name');
+			$this->db->where('no_peminjaman', $no_ttd_peminjaman);
+			$this->db->update('tb_peminjaman_ruangan', array('ttd_peminjaman_ruangan' => $nama_TTD_peminjaman, 'token_peminjaman_ruangan' => $token_peminjaman));
+		}
+	}
+
+	//DELETE PEMINJAMAN
+	public function remove_foto_TTD_peminjaman()
+	{
+		//Ambil token foto
+		$token_peminjaman = $this->input->post('token');
+		$foto = $this->db->get_where('tb_peminjaman_ruangan', array('token_peminjaman_ruangan' => $token_peminjaman));
+
+		if ($foto->num_rows() > 0) {
+			$hasil = $foto->row();
+			$nama_foto_ttd = $hasil->ttd_peminjaman_ruangan;
+			if (file_exists($file = FCPATH . './assets/img/peminjaman_ruangan/' . $nama_foto_ttd)) {
+				unlink($file);
+			}
+			$this->db->where('token_peminjaman_ruangan', $token_peminjaman);
+			$this->db->update('tb_peminjaman_ruangan', array('ttd_peminjaman_ruangan' => '', 'token_peminjaman_ruangan' => ''));
+		}
+
+		echo "{}";
+	}
 }

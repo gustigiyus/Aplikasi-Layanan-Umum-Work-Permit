@@ -71,19 +71,25 @@ class Laporan_model extends CI_Model
     return $this->db->query($query)->result_array();
   }
 
-  public function laporan_tenant()
+  public function laporan_izin_kerja_tenant()
   {
     $nama = $this->session->userdata('name');
-    $query = "SELECT `tb_complain`.*,`tb_izin_kerja`.`nama_kontraktor` 
+    $query = "SELECT `tb_complain`.*,`tb_izin_kerja`.* 
               FROM `tb_complain` 
               JOIN `tb_izin_kerja` 
               ON `tb_complain`.`id` = `tb_izin_kerja`.`id_complain` 
               WHERE `tb_izin_kerja`.`nama_kontraktor` = '$nama' 
-              AND `tb_complain`.`status_complain` = 'Izin Kerja Disetujui' 
-              OR `tb_izin_kerja`.`nama_kontraktor` = '$nama' 
-              AND `tb_complain`.`status_complain` = 'Selesai' 
-              ORDER BY `tb_complain`.`status_complain`
+              AND `tb_izin_kerja`.`status_izin_kerja`= 'Selesai'
+              AND `tb_complain`.`status_complain`= 'Selesai'
+              ORDER BY `tb_izin_kerja`.`status_izin_kerja`
             ";
+    return $this->db->query($query)->result_array();
+  }
+
+  public function laporan_data_complain()
+  {
+    $username = $this->session->userdata('name');
+    $query = "SELECT `tb_complain`.*,`tb_izin_kerja`.`id_complain` FROM `tb_complain` join `tb_izin_kerja` ON `tb_complain`.`id` = `tb_izin_kerja`.`id_complain` WHERE `tb_izin_kerja`.`nama_kontraktor`= '$username' AND `tb_izin_kerja`.`status_izin_kerja`= 'Selesai'  AND `tb_complain`.`status_complain`= 'Selesai'";
     return $this->db->query($query)->result_array();
   }
 }

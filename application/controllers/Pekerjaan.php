@@ -8,13 +8,12 @@ class Pekerjaan extends CI_Controller
   public function mulai($id)
   {
     //persiapam
-    $data['title'] = 'Complain';
+    $data['title'] = 'Mulai Kerja';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
-    $data['complain'] = $this->db->get_where('tb_complain', ['id' => $id])->result_array();
-    $data['izin'] = $this->db->get_where('tb_izin_kerja', ['id_complain' => $id])->result_array();
     $this->load->model('Profile_model', 'PM');
     $data['role_user'] = $this->PM->role_user()->result_array();
+    $data['izin'] = $this->db->get_where('tb_izin_kerja', ['id' => $id])->result_array();
 
     //load view
     $this->load->view('templates/user_template/header_user', $data);
@@ -28,13 +27,12 @@ class Pekerjaan extends CI_Controller
   public function akhir($id)
   {
     //persiapam
-    $data['title'] = 'Complain';
+    $data['title'] = 'Akhiri Kerja';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
-    $data['complain'] = $this->db->get_where('tb_complain', ['id' => $id])->result_array();
-    $data['izin'] = $this->db->get_where('tb_izin_kerja', ['id_complain' => $id])->result_array();
     $this->load->model('Profile_model', 'PM');
     $data['role_user'] = $this->PM->role_user()->result_array();
+    $data['izin'] = $this->db->get_where('tb_izin_kerja', ['id' => $id])->result_array();
 
     //load view
     $this->load->view('templates/user_template/header_user', $data);
@@ -58,9 +56,14 @@ class Pekerjaan extends CI_Controller
       $this->db->insert('tb_mulai_kerja', array('gambar' => $nama_fotoawal, 'id_izin_kerja' => $id_izin, 'token' => $token_awal));
     }
 
+    $id_izin = $this->input->post('id_izin_kerja');
     $id_comp = $this->input->post('id_complain');
 
-    $this->db->set('status_complain', 'Sedang Dikerjakan');
+    $this->db->set('status_izin_kerja', 'Sedang Dikerjakan');
+    $this->db->where('id', $id_izin);
+    $this->db->update('tb_izin_kerja');
+
+    $this->db->set('status_kerja', 'Sedang Dikerjakan');
     $this->db->where('id', $id_comp);
     $this->db->update('tb_complain');
   }
@@ -129,14 +132,18 @@ class Pekerjaan extends CI_Controller
       $this->db->update('tb_izin_kerja', array('ttd' => $nama_TTD, 'token_ttd' => $token));
     }
 
+    $id_izin = $this->input->post('id_izin_kerja');
     $id_comp = $this->input->post('id_complain');
-    $this->db->set('status_complain', 'Selesai Dikerjakan');
-    $this->db->where('id', $id_comp);
-    $this->db->update('tb_complain');
+
     $tgl = date("Y-m-d");
     $this->db->set('tanggal_akhir', $tgl);
-    $this->db->where('id_complain', $id_comp);
+    $this->db->set('status_izin_kerja', 'Selesai Dikerjakan');
+    $this->db->where('id', $id_izin);
     $this->db->update('tb_izin_kerja');
+
+    $this->db->set('status_kerja', 'Selesai Dikerjakan');
+    $this->db->where('id', $id_comp);
+    $this->db->update('tb_complain');
   }
 
   //Untuk menghapus foto

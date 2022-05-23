@@ -67,10 +67,11 @@ class Laporan extends CI_Controller
     $data['title'] = 'Laporan';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
-    $data['complain'] = $this->db->get_where('tb_complain', ['id' => $id])->result_array();
-    $data['izin'] = $this->db->get_where('tb_izin_kerja', ['id_complain' => $id])->result_array();
+    $data['complain'] = $this->db->get_where('tb_complain', array('id' => $id, 'status_complain' => 'Selesai', 'status_kerja' => 'Selesai'))->result_array();
+    $data['izin'] = $this->db->get_where('tb_izin_kerja', array('id_complain' => $id, 'status_izin_kerja' => 'Selesai'))->result_array();
     $id_izin['id'] = $this->db->select('id')->from('tb_izin_kerja')
       ->where('id_complain', $id)
+      ->where('status_izin_kerja', 'Selesai')
       ->get()
       ->result_array();
     $this->load->model('Laporan_model', 'LM');
@@ -111,41 +112,12 @@ class Laporan extends CI_Controller
     }
   }
 
-  public function hal_print($id)
-  {
-    $data['title'] = 'Laporan';
-    $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-    $data['complain'] = $this->db->get_where('tb_complain', ['id' => $id])->result_array();
-    $data['izin'] = $this->db->get_where('tb_izin_kerja', ['id_complain' => $id])->result_array();
-    $id_izin['id'] = $this->db->select('id')->from('tb_izin_kerja')
-      ->where('id_complain', $id)
-      ->get()
-      ->result_array();
-    $this->load->model('Laporan_model', 'LM');
-    $data['JP'] = $this->LM->getallJP($id_izin['id'])->result_array();
-    $data['jmlJP'] = $this->LM->getallJP($id_izin['id'])->num_rows();
-    $data['TP'] = $this->LM->getallTP($id_izin['id']);
-    $data['APD'] = $this->LM->getallAPD($id_izin['id']);
-    $data['pekerja'] = $this->LM->getPekerja($id_izin['id']);
-    $data['mulai'] = $this->LM->getfotomulai($id_izin['id']);
-    $data['akhir'] = $this->LM->getfotoakhir($id_izin['id']);
-    $data['master_JP'] = $this->db->get('tb_master_jenis_potensi')->result_array();
-    $data['master_TP'] = $this->db->get('tb_master_tindak_pencegahan')->result_array();
-    $data['master_APD'] = $this->db->get('tb_master_apd')->result_array();
-
-    $this->load->view('templates/header', $data);
-    $this->load->view('templates/sidebar', $data);
-    $this->load->view('templates/topbar', $data);
-    $this->load->view('laporan/hal_print', $data);
-    $this->load->view('templates/footer');
-  }
-
   public function pdf($id)
   {
-
-    $data['izin'] = $this->db->get_where('tb_izin_kerja', ['id_complain' => $id])->result_array();
+    $data['izin'] = $this->db->get_where('tb_izin_kerja', array('id_complain' => $id, 'status_izin_kerja' => 'Selesai'))->result_array();
     $id_izin['id'] = $this->db->select('id')->from('tb_izin_kerja')
       ->where('id_complain', $id)
+      ->where('status_izin_kerja', 'Selesai')
       ->get()
       ->result_array();
     $this->load->model('Laporan_model', 'LM');
@@ -184,27 +156,31 @@ class Laporan extends CI_Controller
     // Line break
     $pdf->Ln(4);
     $pdf->SetFont('Arial', 'B', 10);
-    // Baris Nomer 1
-    $pdf->Cell(8, 6, '1.', 0, 0);
-    $pdf->Cell(45, 6, 'Berdasarkan WO/PO No.', 0, 0);
-    $pdf->Cell(5, 6, ':', 0, 0);
-    $pdf->Cell(97, 6, 'Menurut saya mantap sih', 0, 0);
-    $pdf->Cell(17, 6, '(Mohon Lampirkan)', 0, 1, 'R');
-    // Baris Nomer 2
-    $pdf->Cell(8, 6, '2.', 0, 0);
-    $pdf->Cell(45, 6, 'Nama Kontraktor/Tenant', 0, 0);
-    $pdf->Cell(5, 6, ':', 0, 0);
-    $pdf->Cell(114, 6, 'Muhamad Ari Zamzam', 0, 1);
-    // Baris Nomer 3
-    $pdf->Cell(8, 6, '3.', 0, 0);
-    $pdf->Cell(45, 6, 'Nama Penanggung Jawab', 0, 0);
-    $pdf->Cell(5, 6, ':', 0, 0);
-    $pdf->Cell(114, 6, 'Gusti Giustianto', 0, 1);
-    // Baris Nomer 4
-    $pdf->Cell(8, 6, '4.', 0, 0);
-    $pdf->Cell(45, 6, 'No. Telpon Kantor', 0, 0);
-    $pdf->Cell(5, 6, ':', 0, 0);
-    $pdf->Cell(114, 6, '081395683366', 0, 0);
+
+    $data_izin_kerja = $data['izin'];
+    foreach ($data_izin_kerja as $dt_izn) {
+      // Baris Nomer 1
+      $pdf->Cell(8, 6, '1.', 0, 0);
+      $pdf->Cell(45, 6, 'Berdasarkan WO/PO No.', 0, 0);
+      $pdf->Cell(5, 6, ':', 0, 0);
+      $pdf->Cell(97, 6, ' - ', 0, 0);
+      $pdf->Cell(17, 6, '(Mohon Lampirkan)', 0, 1, 'R');
+      // Baris Nomer 2
+      $pdf->Cell(8, 6, '2.', 0, 0);
+      $pdf->Cell(45, 6, 'Nama Kontraktor/Tenant', 0, 0);
+      $pdf->Cell(5, 6, ':', 0, 0);
+      $pdf->Cell(114, 6, $dt_izn['nama_kontraktor'], 0, 1);
+      // Baris Nomer 3
+      $pdf->Cell(8, 6, '3.', 0, 0);
+      $pdf->Cell(45, 6, 'Nama Penanggung Jawab', 0, 0);
+      $pdf->Cell(5, 6, ':', 0, 0);
+      $pdf->Cell(114, 6, $dt_izn['nama_penanggung_jawab'], 0, 1);
+      // Baris Nomer 4
+      $pdf->Cell(8, 6, '4.', 0, 0);
+      $pdf->Cell(45, 6, 'No. Telpon Kantor', 0, 0);
+      $pdf->Cell(5, 6, ':', 0, 0);
+      $pdf->Cell(114, 6, $dt_izn['no_telp_kantor'], 0, 0);
+    }
 
     // Line break
     $pdf->Ln(10);
@@ -238,6 +214,7 @@ class Laporan extends CI_Controller
     $pdf->Ln(15);
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->Cell(172, 7, 'Waktu Pelaksanaan Kerja :', 0, 1, 'L');
+
     // Table Header Pelaksanaan Kerja
     $pdf->Cell(43, 7, 'Hari/Tanggal', 1, 0, 'C');
     $pdf->Cell(43, 7, 'Waktu Mulai', 1, 0, 'C');
@@ -247,10 +224,10 @@ class Laporan extends CI_Controller
     $pelaksanaan_kerja = $data['izin'];
     $pdf->SetFont('Arial', '', 10);
     foreach ($pelaksanaan_kerja as $plk_kerja) {
-      $pdf->Cell(43, 7, $plk_kerja['waktu_mulai'], 'BRL', 0, 'C');
-      $pdf->Cell(43, 7, $plk_kerja['waktu_akhir'], 'BR', 0, 'C');
-      $pdf->Cell(43, 7, $plk_kerja['tanggal_dikerjakan'], 'BTR', 0, 'C');
-      $pdf->Cell(43, 7, 'Belum dipanggil', 'BR', 1, 'C');
+      $pdf->Cell(43, 7, $plk_kerja['tanggal_dikerjakan'], 'BRL', 0, 'C');
+      $pdf->Cell(43, 7, $plk_kerja['waktu_mulai'], 'BR', 0, 'C');
+      $pdf->Cell(43, 7, $plk_kerja['waktu_akhir'], 'BTR', 0, 'C');
+      $pdf->Cell(43, 7, ' - ', 'BR', 1, 'C');
     }
 
     // Halaman Detail APD & Something //
@@ -858,7 +835,7 @@ class Laporan extends CI_Controller
     $pdf->Ln(1);
 
     $pdf->SetFont('Arial', 'BU', 10);
-    $pdf->Cell(57.3, 7, 'Muhammad ari zam-zam', 0, 0, 'C');
+    $pdf->Cell(57.3, 7, 'Peter Quill', 0, 0, 'C');
     $pdf->Cell(57.3, 7, '......................................', 0, 0, 'C');
     $pdf->Cell(57.3, 7, '......................................', 0, 1, 'C');
     $pdf->Ln(4);

@@ -7,7 +7,7 @@ class Permintaan extends CI_Controller
     //Menampilkan Halaman Complain (Admin, Tenant, Karyawan)
     public function index()
     {
-        $data['title'] = 'Complain';
+        $data['title'] = 'Data Complain';
         if ($this->session->userdata('role_id') == 3) {
 
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
@@ -17,7 +17,7 @@ class Permintaan extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('umum/admin/index', $data);
+            $this->load->view('umum/admin/permintaan-complain/index', $data);
             $this->load->view('templates/footer');
         } else {
             $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
@@ -56,6 +56,7 @@ class Permintaan extends CI_Controller
         $nm = $this->input->post('nama');
         $jdl_cmp = $this->input->post('judul_complain');
         $dsk = $this->input->post('deskripsi');
+        $lks_pkj = $this->input->post('lokasi_pekerjaan');
         $kdn = $this->input->post('keadaan');
         $tngk_bhy = $this->input->post('tingkat_bahaya');
         $tgl_ajk = $this->input->post('tanggal_ajukan');
@@ -133,6 +134,7 @@ class Permintaan extends CI_Controller
             'nama' => $nm,
             'judul_complain' => $jdl_cmp,
             'deskripsi' => $dsk,
+            'lokasi_pekerjaan' => $lks_pkj,
             'keadaan' => $kdn,
             'tingkat_bahaya' => $tngk_bhy,
             'tanggal_ajukan' => $tgl_ajk,
@@ -234,6 +236,7 @@ class Permintaan extends CI_Controller
         $nm = $this->input->post('nama');
         $jdl_cmp = $this->input->post('judul_complain');
         $dsk = $this->input->post('deskripsi');
+        $lks_pkj = $this->input->post('ed_lokasi_pekerjaan');
         $kdn = $this->input->post('keadaan');
         $tngk_bhy = $this->input->post('tingkat_bahaya');
         $tgl_ajk = $this->input->post('tanggal_ajukan');
@@ -266,74 +269,13 @@ class Permintaan extends CI_Controller
             }
         }
 
-        //gambar 1
-        /*if ($upload_image1 = '') {
-            $upload_image1 =  $this->input->post('old_image1');
-        } else {
-          $filename = $_FILES['new_image1']['name'];
-          $extension = pathinfo($filename, PATHINFO_EXTENSION);
-          $config['file_name'] = rand() . "." . $extension;
-          $config['allowed_types'] = 'gif|jpg|png';
-          $config['max_size'] = '2048';
-          $config['upload_path'] = './assets/img/complain/';
-
-          $this->load->library('upload', $config);
-          if (!$this->upload->do_upload('new_image1')) {
-            $upload_image1 =  $this->input->post('old_image1');
-
-          } else {
-              $upload_image1 = $this->upload->data('file_name');
-              unlink(base_url('assets/img/complain/').$old_image1);
-          }
-            var_dump($upload_image1);
-            die;
-        }
-
-        //gambar2
-        if ($upload_image2 = '') {
-            $upload_image2 =  $this->input->post('old_image2');
-        } else {
-            $filename = $_FILES['new_image2']['name'];
-            $extension = pathinfo($filename, PATHINFO_EXTENSION);
-            $config['file_name'] = rand() . "." . $extension;
-            $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = '2048';
-            $config['upload_path'] = './assets/img/complain/';
-
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('new_image2')) {
-              $upload_image2 =  $this->input->post('old_image2');
-            } else {
-                $upload_image2 = $this->upload->data('file_name');
-                unlink(base_url('assets/img/complain/').$old_image2);
-            }
-        }
-
-        //gambar3
-        if ($upload_image3 = '') {
-            $upload_image3 =  $this->input->post('old_image3');
-        } else {
-            $filename = $_FILES['new_image3']['name'];
-            $extension = pathinfo($filename, PATHINFO_EXTENSION);
-            $config['file_name'] = rand() . "." . $extension;
-            $config['allowed_types'] = 'gif|jpg|png';
-            $config['max_size'] = '2048';
-            $config['upload_path'] = './assets/img/complain/';
-
-            $this->load->library('upload', $config);
-            if (!$this->upload->do_upload('new_image3')) {
-                $upload_image3 = $this->input->post('old_image3');
-            } else {
-                $upload_image3 = $this->upload->data('file_name');
-                unlink(base_url('assets/img/complain/').$old_image3);
-            }
-        }*/
         $data = [
             'id' => $id,
             'email' => $mail,
             'nama' => $nm,
             'judul_complain' => $jdl_cmp,
             'deskripsi' => $dsk,
+            'lokasi_pekerjaan' => $lks_pkj,
             'keadaan' => $kdn,
             'tingkat_bahaya' => $tngk_bhy,
             'tanggal_ajukan' => $tgl_ajk,
@@ -509,9 +451,7 @@ class Permintaan extends CI_Controller
         }
     }
 
-
-
-    //Function Laporan
+    //Function Laporan Complain
     public function laporan()
     {
         $data['title'] = 'Laporan Complain';
@@ -519,8 +459,22 @@ class Permintaan extends CI_Controller
         $data['role_user'] = $this->PM->role_user()->result_array();
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
-        $data['complain'] = $this->db->get_where('tb_complain', ['email' => $this->session->userdata('email'), 'status_complain' => 'Selesai'])->result_array();
+
+        $cari_tanggal_permintaanawal = $this->input->post('cari_tanggal_permintaanawal');
+        $cari_tanggal_permintaanakhir = $this->input->post('cari_tanggal_permintaanakhir');
+
+        if ($cari_tanggal_permintaanawal && $cari_tanggal_permintaanakhir) {
+            $this->db->where('tanggaL_ajukan >=', $cari_tanggal_permintaanawal);
+            $this->db->where('tanggal_ajukan <=', $cari_tanggal_permintaanakhir);
+        }
+        $this->db->select('*');
+        $this->db->from('tb_complain');
+        $this->db->where('email', $this->session->userdata('email'));
+        $this->db->where('status_complain', 'Selesai');
+        $data['complain'] = $this->db->get()->result_array();
+
         $data['izin'] = $this->db->get('tb_izin_kerja')->result_array();
+
         if ($this->session->userdata('role_id') == 4) {
             $this->load->view('templates/user_template/header_user', $data);
             $this->load->view('templates/user_template/navbar_user', $data);
@@ -534,11 +488,24 @@ class Permintaan extends CI_Controller
             $this->load->view('templates/user_template/sidebar_modal_user', $data);
             $this->load->view('templates/user_template/footer_user');
         } else {
-            $data['complain'] = $this->db->get_where('tb_complain', ['status_complain' => 'Selesai'])->result_array();
+
+            $cari_tanggal_permintaanawal = $this->input->post('cari_tanggal_permintaanawal');
+            $cari_tanggal_permintaanakhir = $this->input->post('cari_tanggal_permintaanakhir');
+
+            if ($cari_tanggal_permintaanawal && $cari_tanggal_permintaanakhir) {
+                $this->db->where('tanggaL_ajukan >=', $cari_tanggal_permintaanawal);
+                $this->db->where('tanggal_ajukan <=', $cari_tanggal_permintaanakhir);
+            }
+            $this->db->select('*');
+            $this->db->from('tb_complain');
+            $this->db->where('status_complain', 'Selesai');
+            $this->db->where('status_kerja', 'Selesai');
+            $data['complain'] = $this->db->get()->result_array();
+
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('laporan/admin', $data);
+            $this->load->view('umum/admin/permintaan-complain/laporan', $data);
             $this->load->view('templates/footer');
         }
     }

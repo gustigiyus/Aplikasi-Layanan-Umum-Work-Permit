@@ -61,47 +61,51 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <table class="table table-hover table-bordered table-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th class="align-middle" style="text-align: center;">#</th>
-                                        <th class="align-middle" style="text-align: center;">Email</th>
-                                        <th class="align-middle" style="text-align: center;">Nama Lengkap</th>
-                                        <th class="align-middle" style="text-align: center;">Judul Complain</th>
-                                        <th class="align-middle" style="text-align: center;">Deskripsi</th>
-                                        <th class="align-middle" style="text-align: center;">Keadaan</th>
-                                        <th class="align-middle" style="text-align: center;">Tingkat Bahaya</th>
-                                        <th class="align-middle" style="text-align: center;">Tanggal Diajukan</th>
-                                        <th class="align-middle" style="text-align: center;">Gambar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    <?php foreach ($complain as $comp) : ?>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered" width="100%">
+                                    <thead>
                                         <tr>
-                                            <td class="align-middle"><?= $i; ?></td>
-
-                                            <!-- Lihat data Email & Nama Buat Admin Complain -->
-                                            <td class="align-middle"><?= $comp['email']; ?></td>
-                                            <td class="align-middle"><?= $comp['nama']; ?></td>
-                                            <td class="align-middle"><?= $comp['judul_complain']; ?></td>
-                                            <td class="align-middle"><?= $comp['deskripsi']; ?></td>
-                                            <td class="align-middle"><?= $comp['keadaan']; ?></td>
-                                            <td class="align-middle"><?= $comp['tingkat_bahaya']; ?></td>
-                                            <td class="align-middle"><?= $comp['tanggal_ajukan']; ?></td>
-                                            <td class="align-middle">
-                                                <div class="float-right">
-                                                    <button class="btn btn-info" data-toggle="modal" data-target="#myModaldetailfotoComplain<?PHP echo $comp['id']; ?>">
-                                                        Detail
-                                                    </button>
-                                                </div>
-                                            </td>
+                                            <th class="align-middle" style="text-align: center;">#</th>
+                                            <th class="align-middle" style="text-align: center;">Email</th>
+                                            <th class="align-middle" style="text-align: center;">Nama Lengkap</th>
+                                            <th class="align-middle" style="text-align: center;">Judul Complain</th>
+                                            <th class="align-middle" style="text-align: center;">Deskripsi</th>
+                                            <th class="align-middle" style="text-align: center;">Lokasi Pekerjaan</th>
+                                            <th class="align-middle" style="text-align: center;">Keadaan</th>
+                                            <th class="align-middle" style="text-align: center;">Tingkat Bahaya</th>
+                                            <th class="align-middle" style="text-align: center;">Tanggal Diajukan</th>
+                                            <th class="align-middle" style="text-align: center;">Gambar</th>
                                         </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        <?php foreach ($complain as $comp) : ?>
+                                            <tr>
+                                                <td class="align-middle"><?= $i; ?></td>
 
-                                        <?php $i++; ?>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
+                                                <!-- Lihat data Email & Nama Buat Admin Complain -->
+                                                <td class="align-middle"><?= $comp['email']; ?></td>
+                                                <td class="align-middle"><?= $comp['nama']; ?></td>
+                                                <td class="align-middle"><?= $comp['judul_complain']; ?></td>
+                                                <td class="align-middle"><?= $comp['deskripsi']; ?></td>
+                                                <td class="align-middle"><?= $comp['lokasi_pekerjaan']; ?></td>
+                                                <td class="align-middle"><?= $comp['keadaan']; ?></td>
+                                                <td class="align-middle"><?= $comp['tingkat_bahaya']; ?></td>
+                                                <td class="align-middle"><?= $comp['tanggal_ajukan']; ?></td>
+                                                <td class="align-middle">
+                                                    <div class="float-right">
+                                                        <button class="btn btn-info" data-toggle="modal" data-target="#myModaldetailfotoComplain<?PHP echo $comp['id']; ?>">
+                                                            Detail
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <?php $i++; ?>
+                                        <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <!--end::Card-->
@@ -113,74 +117,73 @@
         <!--end::Container-->
     </div>
     <!--end::Entry-->
+
     <!-- Form Izin Kerja -->
-    <div class="col-lg-10 m-auto">
-        <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
-
-        <?= $this->session->flashdata('message'); ?>
-        <div class="card shadow text-center mb-4">
-            <div class="card-header mr-auto ml-auto">
-                <x class="nav nav-tabs nav-tabs-neutral justify-content-center" role="tablist" data-background-color="black">
-                    <h3 role="tab"><strong>Formulir <?= $title ?></strong> </h3>
-                </x>
-            </div>
-            <div class="card-body">
-                <!--begin::Signin-->
-                <div class="login-form login-signin">
-                    <!--begin::Form-->
-
-                    <?php foreach ($complain as $comp) : ?>
-                        <form action="<?= base_url('workpermit/addizin/' . $comp['id']); ?>" method="POST" novalidate="novalidate" id="kt_izin_kerja_form">
-                        <?php endforeach; ?>
-                        <div class="form-group" hidden>
-                            <h6>id complain</h6>
-                            <?php $i = 1; ?>
-                            <?php foreach ($complain as $comp) : ?>
-                                <input type="text" class="form-control" name="id_complain" id="id_complain" value="<?= $comp['id']; ?>">
-                                <?php $i++; ?>
-                            <?php endforeach; ?>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="nama_kontraktor" style="color: black; float: left;">Nama Kontraktor</label>
-                                <input type="text" class="form-control form-control-solid h-auto py-5 px-6" name="nama_kontraktor" id="nama_kontraktor" placeholder="Masukan Nama Kontraktor" value="<?= $this->session->userdata('name'); ?>" readonly>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="nama_penanggung_jawab" style="color: black; float: left;">Nama Penanggung Jawab</label>
-                                <input type="text" class="form-control form-control-solid h-auto py-5 px-6" name="nama_penanggung_jawab" id="nama_penanggung_jawab" placeholder="Masukan Nama Penangung Jawab" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-8">
-                                <label for="desk_kerja" style="color: black; float: left;">Deskripsi Pekerjaan</label>
-                                <textarea class="form-control form-control-solid h-auto py-5 px-6" id="desk_kerja" name="desk_kerja" rows="3" placeholder="Masukan Deskripsi Pekerjaan" autocomplete="off"></textarea>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="no_telp" style="color: black; float: left;">No Telepon Kantor</label>
-                                <input type="text" class="form-control form-control-solid h-auto py-5 px-6" name="no_telp" id="no_telp" placeholder="Masukan Telepon Kantor" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="tanggal" style="color: black; float: left;">Tanggal</label>
-                                <input type="date" class="form-control form-control-solid h-auto py-5 px-6" name="tanggal" id="tanggal" placeholder="Masukan Tanggal" autocomplete="off">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="waktu_mulai" style="color: black; float: left;">waktu Mulai</label>
-                                <input type="time" class="form-control form-control-solid h-auto py-5 px-6" name="waktu_mulai" id="waktu_mulai" autocomplete="off">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="waktu_akhir" style="color: black; float: left;">waktu Akhir</label>
-                                <input type="time" class="form-control form-control-solid h-auto py-5 px-6" name="waktu_akhir" id="waktu_akhir" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-group d-flex flex-wrap justify-content-between align-items-center float-right">
-                            <button type="button" id="kt_izin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3">Selanjutnya</button>
-                        </div>
-                        </form>
-                        <!--end::Form-->
+    <div class="d-flex flex-column-fluid">
+        <div class="col-lg-10 m-auto">
+            <div class="card shadow text-center mb-4">
+                <div class="card-header mr-auto ml-auto">
+                    <x class="nav nav-tabs nav-tabs-neutral justify-content-center" role="tablist" data-background-color="black">
+                        <h3 role="tab"><strong>Formulir <?= $title ?></strong> </h3>
+                    </x>
                 </div>
+                <div class="card-body">
+                    <!--begin::Signin-->
+                    <div class="login-form login-signin">
+                        <!--begin::Form-->
 
+                        <?php foreach ($complain as $comp) : ?>
+                            <form action="<?= base_url('workpermit/addizin/' . $comp['id']); ?>" method="POST" novalidate="novalidate" id="kt_izin_kerja_form">
+                            <?php endforeach; ?>
+                            <div class="form-group" hidden>
+                                <h6>Data Hidden</h6>
+                                <?php foreach ($complain as $comp) : ?>
+                                    <input type="text" class="form-control" name="id_complain" id="id_complain" value="<?= $comp['id']; ?>">
+                                    <input type="text" class="form-control" name="lokasi_pekerjaan" id="lokasi_pekerjaan" value="<?= $comp['lokasi_pekerjaan']; ?>">
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="nama_kontraktor" style="color: black; float: left;">Nama Kontraktor</label>
+                                    <input type="text" class="form-control form-control-solid h-auto py-5 px-6" name="nama_kontraktor" id="nama_kontraktor" placeholder="Masukan Nama Kontraktor" value="<?= $this->session->userdata('name'); ?>" readonly>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="nama_penanggung_jawab" style="color: black; float: left;">Nama Penanggung Jawab</label>
+                                    <input type="text" class="form-control form-control-solid h-auto py-5 px-6" name="nama_penanggung_jawab" id="nama_penanggung_jawab" placeholder="Masukan Nama Penangung Jawab" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label for="desk_kerja" style="color: black; float: left;">Deskripsi Pekerjaan</label>
+                                    <textarea class="form-control form-control-solid h-auto py-5 px-6" id="desk_kerja" name="desk_kerja" rows="3" placeholder="Masukan Deskripsi Pekerjaan" autocomplete="off"></textarea>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="no_telp" style="color: black; float: left;">No Telepon Kantor</label>
+                                    <input type="text" class="form-control form-control-solid h-auto py-5 px-6" name="no_telp" id="no_telp" placeholder="Masukan Telepon Kantor" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="tanggal" style="color: black; float: left;">Tanggal</label>
+                                    <input type="date" class="form-control form-control-solid h-auto py-5 px-6" name="tanggal" id="tanggal" placeholder="Masukan Tanggal" autocomplete="off">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="waktu_mulai" style="color: black; float: left;">waktu Mulai</label>
+                                    <input type="time" class="form-control form-control-solid h-auto py-5 px-6" name="waktu_mulai" id="waktu_mulai" autocomplete="off">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="waktu_akhir" style="color: black; float: left;">waktu Akhir</label>
+                                    <input type="time" class="form-control form-control-solid h-auto py-5 px-6" name="waktu_akhir" id="waktu_akhir" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="form-group d-flex flex-wrap justify-content-between align-items-center float-right">
+                                <button type="button" id="kt_izin_submit" class="btn btn-primary font-weight-bold px-9 py-4 my-3">Selanjutnya</button>
+                            </div>
+                            </form>
+                            <!--end::Form-->
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

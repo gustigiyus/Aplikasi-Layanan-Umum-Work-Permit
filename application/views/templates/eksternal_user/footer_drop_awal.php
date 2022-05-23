@@ -91,53 +91,6 @@
 <script src="<?= base_url('assets_pengguna/') ?>plugins/custom/prismjs/prismjs.bundle.js"></script>
 <script src="<?= base_url('assets_pengguna/') ?>js/scripts.bundle.js"></script>
 <!--end::Global Theme Bundle-->
-<!--begin::Page Vendors(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-<!--end::Page Vendors-->
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/pages/widgets.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Vendors(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>plugins/custom/datatables/datatables.bundle.js"></script>
-<!--end::Page Vendors-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/js_pengguna/datatables.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/js_pengguna/minimize.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/js_pengguna/wizard.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/js_pengguna/imagecustom.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/pages/widgets.js"></script>
-<script src="<?= base_url('assets_pengguna/') ?>js/pages/custom/profile/profile.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/js_pengguna/requirement_alert.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/js_pengguna/datatabledetail.js"></script>
-<!--end::Page Scripts-->
-
-<!--begin::Page Scripts(used by this page)-->
-
-<script src="<?php echo base_url(); ?>assets/jquery/jquery.min.js"></script>
 
 <!--Upload Foto Mulai Kerja-->
 <script>

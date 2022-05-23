@@ -10,21 +10,25 @@ class Workpermit extends CI_Controller
         $data['title'] = 'Pengajuan Izin Kerja';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
+
         $data['complain'] = $this->db->select('*')->from('tb_complain')
             ->group_start()
-            ->where('status_complain !=', 'Selesai')
-            ->where('status_complain !=', 'Selesai Dikerjakan')
-            ->where('status_complain !=', 'Sedang Dikerjakan')
-            ->where('status_complain !=', 'Izin Kerja Disetujui')
+            ->where('status_kerja !=', 'Selesai')
+            ->where('status_kerja !=', 'Selesai Dikerjakan')
+            ->where('status_kerja !=', 'Sedang Dikerjakan')
+            ->where('status_kerja !=', 'Izin Kerja Disetujui')
             ->where('email !=', $this->session->userdata('email'))
             ->group_end()
             ->get()
             ->result_array();
-        $data['complain2'] = $this->db->get('tb_izin_kerja')->num_rows();
-        $data['izin'] = $this->db->get('tb_izin_kerja')->num_rows();
-        $data['izin2'] = $this->db->get('tb_izin_kerja')->result_array();
-        $data['pekerja'] = $this->db->get('tb_tenaga_kerja')->result_array();
-        $data['pekerja2'] = $this->db->get('tb_tenaga_kerja')->num_rows();
+
+        // Hitung Jumlah data sesuai dengan id_complain dan nama kontraktor
+        $this->load->model('workpermit_model', 'dc');
+        $data['complainizin'] = $this->dc->data_izinkerja_complain();
+
+        $data['izin_kerja'] = $this->db->get_where('tb_izin_kerja', ['nama_kontraktor' => $this->session->userdata('name')])->result_array();
+
+
 
         if ($this->session->userdata('role_id') == 4) {
             $this->load->view('templates/user_template/header_user', $data);
@@ -33,7 +37,6 @@ class Workpermit extends CI_Controller
             $this->load->view('templates/user_template/sidebar_modal_user', $data);
             $this->load->view('templates/user_template/footer_user');
         } else {
-
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
@@ -61,15 +64,18 @@ class Workpermit extends CI_Controller
 
     public function pekerjaan()
     {
-        $data['title'] = 'Pekerjaan';
+        $data['title'] = 'Data Pekerjaan';
         $this->load->model('Profile_model', 'PM');
         $data['role_user'] = $this->PM->role_user()->result_array();
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
         $this->load->model('workpermit_model', 'pekerja');
-        $data['complain'] = $this->pekerja->detailcomplain();
-        $data['izin'] = $this->pekerja->detailizin();
-        $data['pekerja'] = $this->pekerja->detailpekerja();
+
+        //Data Complain Yang Sudah OKE
+        $data['complain'] = $this->pekerja->data_complain_OK();
+
+        //Data Izin Kerja Yang Sudah OKE
+        $data['izin_kerja'] = $this->pekerja->data_izinkerja_OK();
 
         $this->load->view('templates/user_template/header_user', $data);
         $this->load->view('templates/user_template/navbar_user', $data);
@@ -135,6 +141,7 @@ class Workpermit extends CI_Controller
         $na_pen = $this->input->post('nama_penanggung_jawab');
         $no_tel = $this->input->post('no_telp');
         $desk = $this->input->post('desk_kerja');
+        $lks_pkj = $this->input->post('lokasi_pekerjaan');
         $date = $this->input->post('tanggal');
         $tanggal = date('Y-m-d', strtotime($date));
         $wak_mu = $this->input->post('waktu_mulai');
@@ -142,18 +149,8 @@ class Workpermit extends CI_Controller
         $wak_ak = $this->input->post('waktu_akhir');
         $wak_ak_t = $tanggal . ' ' . $wak_ak;
 
-        //data dimasukan ke array
-        $data = [
-            'id_complain' => $id_comp,
-            'nama_kontraktor' => $na_kon,
-            'nama_penanggung_jawab' => $na_pen,
-            'deskripsi_pekerjaan' => $desk,
-            'tanggal_dikerjakan' => $tanggal,
-            'waktu_mulai' => $wak_mu_t,
-            'waktu_akhir' => $wak_ak_t,
-        ];
         $this->load->model('workpermit_model');
-        $this->workpermit_model->addizin($id_comp, $na_kon, $na_pen, $no_tel, $desk, $tanggal, $wak_mu_t, $wak_ak_t);
+        $this->workpermit_model->addizin($id_comp, $na_kon, $na_pen, $no_tel, $desk, $lks_pkj, $tanggal, $wak_mu_t, $wak_ak_t);
         redirect('workpermit/addpekerja/' . $id);
     }
 
@@ -392,12 +389,17 @@ class Workpermit extends CI_Controller
 
 
     // SEMUA FUNCTION ADD PEKERJA //
-    public function formtambahbanyak($id, $id_complain)
+    public function formtambahbanyak($id, $id_complain, $lokasi)
     {
+
+        $lokasi_pekerjaan = urldecode($lokasi);
+
         if ($this->input->is_ajax_request()) {
+
             $data = array(
                 'id_izin' => $id,
-                'id_complain' => $id_complain
+                'id_complain' => $id_complain,
+                'lokasi_pekerjaan' => $lokasi_pekerjaan
             );
 
             $msg = [
@@ -548,7 +550,7 @@ class Workpermit extends CI_Controller
         }
 
         $id_comp = $this->input->post('id_complain');
-        $query2 = "UPDATE tb_complain SET status_complain = 'Meminta Izin Kerja' WHERE id = '$id_comp'";
+        $query2 = "UPDATE tb_complain SET status_complain = 'Complain Disetujui' WHERE id = '$id_comp'";
         $this->db->query($query2);
         $this->_sendEmail();
 
@@ -781,10 +783,12 @@ class Workpermit extends CI_Controller
         $data['role_user'] = $this->PM->role_user()->result_array();
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
-        $data['complain'] = $this->lm->laporan_tenant();
-        $data['izin'] = $this->db->get('tb_izin_kerja')->result_array();
 
+        //Data Izin Yang Sudah OKE
+        $data['izin_kerja'] = $this->lm->laporan_izin_kerja_tenant();
+        //Data Complain Yang Sudah OKE
 
+        $data['complain'] = $this->lm->laporan_data_complain();
 
         $this->load->view('templates/user_template/header_user', $data);
         $this->load->view('templates/user_template/navbar_user', $data);

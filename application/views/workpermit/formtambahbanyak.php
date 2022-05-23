@@ -27,7 +27,7 @@
                     <input type="text" name="jenis_pekerja[]" class="form-control" required autocomplete="off">
                 </td>
                 <td class="align-middle" style="text-align: center;">
-                    <input type="text" name="lokasi_pekerja[]" class="form-control" required autocomplete="off">
+                    <input type="text" name="lokasi_pekerja[]" value="<?= $lokasi_pekerjaan ?>" class="form-control" required autocomplete="off">
                 </td>
                 <td class="align-middle" style="text-align: center;">
                     <button type="button" class="btn btn-success btn-sm btnaddform">
@@ -109,7 +109,7 @@
             $('.btnaddform').click(function(e) {
                 e.preventDefault();
 
-                $('.formtambah').append('<tr><td class="align-middle" style="text-align: center;" hidden><input type="text" name="id_izin_kerja[]" class="form-control" value="<?= $id_izin ?>"></td><td class="align-middle" style="text-align: center;"><input type="text" name="nama_pekerja[]" class="form-control" required autocomplete="off"></td><td class="align-middle" style="text-align: center;"><input type="text" name="jenis_pekerja[]" class="form-control" required autocomplete="off"></td><td class="align-middle" style="text-align: center;"><input type="text" name="lokasi_pekerja[]" class="form-control" required autocomplete="off"></td><td class="align-middle" style="text-align: center;"><button type="button" class="btn btn-sm btn-danger btnhapus"><i class="fa fa-trash"></i></button></td></tr>');
+                $('.formtambah').append('<tr><td class="align-middle" style="text-align: center;" hidden><input type="text" name="id_izin_kerja[]" class="form-control" value="<?= $id_izin ?>"></td><td class="align-middle" style="text-align: center;"><input type="text" name="nama_pekerja[]" class="form-control" required autocomplete="off"></td><td class="align-middle" style="text-align: center;"><input type="text" name="jenis_pekerja[]" class="form-control" required autocomplete="off"></td><td class="align-middle" style="text-align: center;"> <input type="text" name="lokasi_pekerja[]" value="<?= $lokasi_pekerjaan ?>" class="form-control" required autocomplete="off"></td><td class="align-middle" style="text-align: center;"><button type="button" class="btn btn-sm btn-danger btnhapus"><i class="fa fa-trash"></i></button></td></tr>');
             });
         });
 

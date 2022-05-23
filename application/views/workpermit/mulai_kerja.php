@@ -53,16 +53,14 @@
               <!--begin::Form-->
               <div id="main">
                 <div id="header">
-                  <h1 style="text-align: center;">Seret & letakan Foto kesini</h1>
+                  <h1 style="text-align: center;">Seret & letakan Foto Sebelum Kerja kesini</h1>
                 </div>
               </div>
 
               <div id="content">
                 <form class="dropzone" id="file_upload_awal">
-                  <?php foreach ($complain as $c) : ?>
-                    <input type="text" name="id_complain" value="<?= $c['id']; ?>" hidden>
-                  <?php endforeach; ?>
                   <?php foreach ($izin as $iz) : ?>
+                    <input type="text" name="id_complain" value="<?= $iz['id_complain']; ?>" hidden>
                     <input type="text" name="id_izin_kerja" value="<?= $iz['id']; ?>" hidden>
                   <?php endforeach; ?>
                   <div class="dz-message">

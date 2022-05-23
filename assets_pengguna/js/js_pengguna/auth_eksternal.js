@@ -238,13 +238,6 @@ var KTLogin = function() {
 							}
 						}
 					},
-					nm_kota: {
-						validators: {
-							notEmpty: {
-								message: 'Nama kota diperlukan'
-							}
-						}
-					}
 				},
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
@@ -266,13 +259,6 @@ var KTLogin = function() {
 						validators: {
 							notEmpty: {
 								message: 'Tanggal lahir diperlukan'
-							}
-						}
-					},
-					tmp_lahir: {
-						validators: {
-							notEmpty: {
-								message: 'Tempat lahirdiperlukan'
 							}
 						}
 					},

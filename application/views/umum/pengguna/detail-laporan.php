@@ -64,7 +64,7 @@
                     <div class="card-toolbar">
                         <ul class="nav nav-bold nav-pills">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_7_1">Complain</a>
+                                <a class="nav-link active" data-toggle="tab" href="#kt_tab_pane_7_1">Komplain</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#kt_tab_pane_7_2">Izin Kerja</a>
@@ -97,7 +97,7 @@
                                     <div class="card card-custom card-stretch card-border">
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h3 class="card-label" style="text-align: center;">Pengaju Complain
+                                                <h3 class="card-label" style="text-align: center;">Pengaju Komplain
                                                 </h3>
                                             </div>
                                         </div>
@@ -120,14 +120,14 @@
                                     <div class="card card-custom card-border">
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h3 class="card-label" style="text-align: center;">Detail Complain
+                                                <h3 class="card-label" style="text-align: center;">Detail Komplain
                                                 </h3>
                                             </div>
                                         </div>
                                         <div class="card-body">
                                             <?php foreach ($complain as $comp) : ?>
                                                 <span class="row">
-                                                    <label>Judul Complain : <?= $comp['judul_complain']; ?></label>
+                                                    <label>Judul Komplain : <?= $comp['judul_complain']; ?></label>
                                                 </span>
                                                 <span class="row">
                                                     <label>Keadaan : <?= $comp['keadaan']; ?></label>
@@ -136,7 +136,7 @@
                                                     <label>Tingkat Bahaya Pekerjaan : <?= $comp['tingkat_bahaya']; ?></label>
                                                 </span>
                                                 <span class="row">
-                                                    <label>Tanggal Complain Diajukan : <?= $comp['tanggal_ajukan']; ?></label>
+                                                    <label>Tanggal Komplain Diajukan : <?= $comp['tanggal_ajukan']; ?></label>
                                                 </span>
                                             <?php endforeach; ?>
                                         </div>
@@ -153,7 +153,7 @@
                                     <div class="card card-custom card-stretch card-border">
                                         <div class="card-header">
                                             <div class="card-title">
-                                                <h3 class="card-label" style="text-align: center;">Deskripsi Complain
+                                                <h3 class="card-label" style="text-align: center;">Deskripsi Komplain
                                                 </h3>
                                             </div>
                                         </div>
@@ -177,7 +177,7 @@
                                 <div class="card card-custom card-border card-stretch">
                                     <div class="card-header">
                                         <div class="card-title">
-                                            <h3 class="card-label" style="text-align: center;">Foto Complain
+                                            <h3 class="card-label" style="text-align: center;">Foto Komplain
                                             </h3>
                                         </div>
                                     </div>

@@ -25,6 +25,13 @@ document.addEventListener('DOMContentLoaded', function(e) {
                         }
                     }
                 },
+                lokasi_pekerjaan: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Lokasi Pekerjaan Tidak Boleh Kosong'
+                        }
+                    }
+                },
                 tanggal_ajukan: {
                     validators: {
                         notEmpty: {

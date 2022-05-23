@@ -12,7 +12,7 @@ class Menu extends CI_Controller
 
   public function index()
   {
-    $data['title'] = 'Menu Management';
+    $data['title'] = 'Manajemen Menu';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['menu'] = $this->db->get('user_menu')->result_array();
 
@@ -33,7 +33,7 @@ class Menu extends CI_Controller
 
   public function submenu()
   {
-    $data['title'] = 'Submenu Management';
+    $data['title'] = 'Manajemen Submenu';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['menu'] = $this->db->get('user_menu')->result_array();
     $this->load->model('Menu_model', 'menu');
@@ -109,7 +109,7 @@ class Menu extends CI_Controller
   //SSMenu
   public function ssmenu()
   {
-    $data['title'] = 'SSubmenu Management';
+    $data['title'] = 'Manajemen SSubmenu';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['menu'] = $this->db->get('user_menu')->result_array();
     $this->load->model('Menu_model', 'menu');
@@ -169,7 +169,7 @@ class Menu extends CI_Controller
   //TreeMenu
   public function treemenu()
   {
-    $data['title'] = 'Treemenu Management';
+    $data['title'] = 'Manajemen Treemenu';
     $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
     $data['menu'] = $this->db->get('user_menu')->result_array();
     $this->load->model('Menu_model', 'menu');

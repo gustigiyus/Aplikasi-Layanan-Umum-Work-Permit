@@ -45,7 +45,7 @@
                     <li class="nav-item">
                         <a class="nav-link btn btn-danger btn-round" href="<?= base_url('landingpage/login'); ?>">
                             <i class="fas fa-sign-in-alt"></i>
-                            <p>Login / Registrasi</p>
+                            <p>Masuk / Registrasi</p>
                         </a>
                     </li>
                 </ul>

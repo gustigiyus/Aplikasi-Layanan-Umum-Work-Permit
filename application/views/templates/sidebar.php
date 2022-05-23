@@ -49,6 +49,50 @@
         $subMenu = $this->db->query($querySubMenu)->result_array();
         ?>
 
+        <!-- SIAPKAN SSUB-MENU SESUAI MENU -->
+        <?php
+        $queryssMenu = "SELECT `user_ss_menu`.*, `user_ss_menu`.`id` AS 'id_ss', `user_menu`.*
+                        FROM  `user_ss_menu` JOIN `user_menu`
+                        ON    `user_ss_menu`.`menu_id` = `user_menu`.`id`
+                        WHERE `user_ss_menu`.`menu_id` = $menuId
+                        AND   `user_ss_menu`.`is_active` = 1
+                        ";
+        $ssmenu = $this->db->query($queryssMenu)->result_array();
+        ?>
+
+        <!--begin::SSmenu-->
+        <?php foreach ($ssmenu as $ssm) : ?>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed pb-0" href="#" data-toggle="collapse" data-target="#collapseTwo-<?= $ssm['id_ss'] ?>" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="<?= $ssm['icon'] ?>"></i>
+                    <span><?= $ssm['title'] ?></span>
+                </a>
+                <div id="collapseTwo-<?= $ssm['id_ss'] ?>" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded" style="margin-bottom: -5px; margin-top: 5px;">
+                        <h6 class="collapse-header"><?= $ssm['title'] ?>:</h6>
+                        <!-- SIAPKAN TREE-MENU SESUAI SSUB-MENU -->
+                        <?php
+                        $ssid = $ssm['id_ss'];
+                        $queryssMenu = "SELECT *
+                        FROM   `user_tree_menu`
+                        WHERE `user_tree_menu`.`menu_tree` = $ssid
+                        AND `user_tree_menu`.`is_active` = 1
+                        ";
+                        $treeMenu = $this->db->query($queryssMenu)->result_array();
+                        ?>
+                        <!--begin::Treemenu-->
+                        <?php foreach ($treeMenu as $tm) : ?>
+                            <a class="collapse-item" href="<?= base_url('/') . $tm['url'] ?>"><?= $tm['title'] ?></a>
+                        <?php endforeach; ?>
+                        <!--end::Treemenu-->
+                    </div>
+                </div>
+            </li>
+        <?php endforeach; ?>
+        <!--end::SSmenu-->
+
+        <!--begin::Submenu-->
         <?php foreach ($subMenu as $sm) : ?>
             <?php if ($title == $sm['title']) : ?>
                 <li class="nav-item active">
@@ -60,10 +104,11 @@
                     <span><?= $sm['title']; ?></span></a>
                 </li>
             <?php endforeach; ?>
-
+            <!--end::Submenu-->
             <hr class="sidebar-divider mt-3">
 
         <?php endforeach; ?>
+
 
         <!-- Nav Item - Logout -->
         <li class="nav-item">

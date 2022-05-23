@@ -6,8 +6,7 @@
             <!--begin::Info-->
             <div class="d-flex align-items-center flex-wrap mr-1">
                 <!--begin::Mobile Toggle-->
-                <button class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none"
-                    id="kt_subheader_mobile_toggle">
+                <button class="burger-icon burger-icon-left mr-4 d-inline-block d-lg-none" id="kt_subheader_mobile_toggle">
                     <span></span>
                 </button>
                 <!--end::Mobile Toggle-->
@@ -40,24 +39,22 @@
             <!--end::Info-->
             <!--begin::Toolbar-->
             <?php foreach ($user2 as $usr) : ?>
-            <?php
+                <?php
                 $password_hash = $usr['password'];
                 $password = "1234";
                 if (password_verify($password, $password_hash)) : ?>
-            <div class="d-flex align-items-center">
-                <!--begin::Button-->
-                <button disabled style="opacity: 0.65; cursor: not-allowed;"
-                    class="btn btn-transparent-white font-weight-bold py-3 px-6 mr-2">Beranda</button>
-                <!--end::Button-->
-            </div>
-            <?php else : ?>
-            <div class="d-flex align-items-center">
-                <!--begin::Button-->
-                <a href="<?= base_url('beranda'); ?>"
-                    class="btn btn-transparent-white font-weight-bold py-3 px-6 mr-2">Beranda</a>
-                <!--end::Button-->
-            </div>
-            <?php endif ?>
+                    <div class="d-flex align-items-center">
+                        <!--begin::Button-->
+                        <button disabled style="opacity: 0.65; cursor: not-allowed;" class="btn btn-transparent-white font-weight-bold py-3 px-6 mr-2">Beranda</button>
+                        <!--end::Button-->
+                    </div>
+                <?php else : ?>
+                    <div class="d-flex align-items-center">
+                        <!--begin::Button-->
+                        <a href="<?= base_url('beranda'); ?>" class="btn btn-transparent-white font-weight-bold py-3 px-6 mr-2">Beranda</a>
+                        <!--end::Button-->
+                    </div>
+                <?php endif ?>
             <?php endforeach; ?>
             <!--end::Toolbar-->
         </div>
@@ -77,16 +74,13 @@
                         <div class="card-body pt-4">
                             <!--begin::User-->
                             <div class="d-flex align-items-center">
-                                <div
-                                    class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
-                                    <div class="symbol-label"
-                                        style="background-image:url('<?= base_url('assets/img/profile/') . $user['image']; ?>')">
+                                <div class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center">
+                                    <div class="symbol-label" style="background-image:url('<?= base_url('assets/img/profile/') . $user['image']; ?>')">
                                     </div>
                                     <i class="symbol-badge bg-success"></i>
                                 </div>
                                 <div>
-                                    <a style="cursor: pointer;"
-                                        class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"><?= $user['name']; ?></a>
+                                    <a style="cursor: pointer;" class="font-weight-bolder font-size-h5 text-dark-75 text-hover-primary"><?= $user['name']; ?></a>
                                     <div class="text-muted"><?= $role_user[0]['role']; ?></div>
                                 </div>
                             </div>
@@ -95,8 +89,7 @@
                             <div class="py-9">
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <span class="font-weight-bold mr-2">Email:</span>
-                                    <a style="cursor: pointer;"
-                                        class="text-muted text-hover-primary"><?= $user['email']; ?></a>
+                                    <a style="cursor: pointer;" class="text-muted text-hover-primary"><?= $user['email']; ?></a>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between mb-2">
                                     <span class="font-weight-bold mr-2">Telepon:</span>
@@ -111,17 +104,11 @@
                                         <span class="navi-icon mr-2">
                                             <span class="svg-icon svg-icon-success">
                                                 <!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                    height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                         <polygon points="0 0 24 0 24 24 0 24" />
-                                                        <path
-                                                            d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
-                                                            fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                                        <path
-                                                            d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
-                                                            fill="#000000" fill-rule="nonzero" />
+                                                        <path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                        <path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
                                                     </g>
                                                 </svg>
                                                 <!--end::Svg Icon-->
@@ -134,17 +121,11 @@
                                     <a href="<?= base_url('profile/changepassword'); ?>" class="navi-link py-4">
                                         <span class="navi-icon mr-2">
                                             <span class="svg-icon svg-icon-danger">
-                                                <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Chat-locked.svg--><svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-                                                    height="24px" viewBox="0 0 24 24" version="1.1">
+                                                <!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo2\dist/../src/media/svg/icons\Communication\Chat-locked.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                         <rect x="0" y="0" width="24" height="24" />
-                                                        <polygon fill="#000000" opacity="0.3"
-                                                            points="5 15 3 21.5 9.5 19.5" />
-                                                        <path
-                                                            d="M16,10 L16,9.5 C16,8.11928813 14.8807119,7 13.5,7 C12.1192881,7 11,8.11928813 11,9.5 L11,10 C10.4477153,10 10,10.4477153 10,11 L10,14 C10,14.5522847 10.4477153,15 11,15 L16,15 C16.5522847,15 17,14.5522847 17,14 L17,11 C17,10.4477153 16.5522847,10 16,10 Z M13.5,21 C8.25329488,21 4,16.7467051 4,11.5 C4,6.25329488 8.25329488,2 13.5,2 C18.7467051,2 23,6.25329488 23,11.5 C23,16.7467051 18.7467051,21 13.5,21 Z M13.5,8 L13.5,8 C14.3284271,8 15,8.67157288 15,9.5 L15,10 L12,10 L12,9.5 C12,8.67157288 12.6715729,8 13.5,8 Z"
-                                                            fill="#000000" />
+                                                        <polygon fill="#000000" opacity="0.3" points="5 15 3 21.5 9.5 19.5" />
+                                                        <path d="M16,10 L16,9.5 C16,8.11928813 14.8807119,7 13.5,7 C12.1192881,7 11,8.11928813 11,9.5 L11,10 C10.4477153,10 10,10.4477153 10,11 L10,14 C10,14.5522847 10.4477153,15 11,15 L16,15 C16.5522847,15 17,14.5522847 17,14 L17,11 C17,10.4477153 16.5522847,10 16,10 Z M13.5,21 C8.25329488,21 4,16.7467051 4,11.5 C4,6.25329488 8.25329488,2 13.5,2 C18.7467051,2 23,6.25329488 23,11.5 C23,16.7467051 18.7467051,21 13.5,21 Z M13.5,8 L13.5,8 C14.3284271,8 15,8.67157288 15,9.5 L15,10 L12,10 L12,9.5 C12,8.67157288 12.6715729,8 13.5,8 Z" fill="#000000" />
                                                     </g>
                                                 </svg>
                                                 <!--end::Svg Icon-->
@@ -152,8 +133,7 @@
                                         </span>
                                         <span class="navi-text font-size-lg">Ganti kata sandi akun</span>
                                         <span class="navi-label">
-                                            <span
-                                                class="label label-light-danger label-rounded font-weight-bold">!</span>
+                                            <span class="label label-light-danger label-rounded font-weight-bold">!</span>
                                         </span>
                                     </a>
                                 </div>
@@ -176,16 +156,15 @@
                                 <span class="text-muted font-weight-bold font-size-sm mt-1">Perbarui informasi pribadi
                                     Anda</span>
                             </div>
-                            <form class="form" action="<?= base_url('profile/edit'); ?>" method="post"
-                                enctype="multipart/form-data">
+
+                            <!--begin::Form-->
+                            <form class="form" action="<?= base_url('profile/edit'); ?>" method="post" enctype="multipart/form-data">
                                 <div class="card-toolbar">
                                     <button type="submit" class="btn btn-success mr-2">Simpan perubahan</button>
                                     <button type="reset" class="btn btn-secondary">Batal</button>
                                 </div>
                         </div>
                         <!--end::Header-->
-                        <!--begin::Form-->
-
                         <!--begin::Body-->
                         <div class="card-body">
                             <div class="row">
@@ -197,27 +176,18 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">Foto Profile</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <div class="image-input image-input-outline" id="kt_profile_avatar"
-                                        style="background-image: url(<?= base_url('assets_pengguna/') ?>media/users/blank.png)">
-                                        <div class="image-input-wrapper"
-                                            style="background-image: url(<?= base_url('assets/img/profile/') . $user['image']; ?>)">
+                                    <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(<?= base_url('assets_pengguna/') ?>media/users/blank.png)">
+                                        <div class="image-input-wrapper" style="background-image: url(<?= base_url('assets/img/profile/') . $user['image']; ?>)">
                                         </div>
-                                        <label
-                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                            data-action="change" data-toggle="tooltip" title=""
-                                            data-original-title="Ubah Profil">
+                                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Ubah Profil">
                                             <i class="fa fa-pen icon-sm text-muted"></i>
                                             <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
                                             <input type="hidden" name="profile_avatar_remove" />
                                         </label>
-                                        <span
-                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                            data-action="cancel" data-toggle="tooltip" title="Batalkan">
+                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Batalkan">
                                             <i class="ki ki-bold-close icon-xs text-muted"></i>
                                         </span>
-                                        <span
-                                            class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                                            data-action="remove" data-toggle="tooltip" title="Hapus Profil">
+                                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Hapus Profil">
                                             <i class="ki ki-bold-close icon-xs text-muted"></i>
                                         </span>
                                     </div>
@@ -227,41 +197,26 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <input type="text" class="form-control form-control-lg form-control-solid"
-                                        id="email" name="email" value="<?= $user['email']; ?>" readonly>
+                                    <input type="text" class="form-control form-control-lg form-control-solid" id="email" name="email" value="<?= $user['email']; ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">Nama Lengkap</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text"
-                                        name="name" value="<?= $user['name']; ?>" autocomplete="off" />
-                                    <?= form_error('name', '<small class="text-danger pl-3">', '</small>'); ?>
+                                    <input class="form-control form-control-lg form-control-solid" type="text" name="name" value="<?= $detail_user[0]['nama']; ?>" placeholder="Masukan Nama Lengkap" autocomplete="off" />
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">NIP</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text"
-                                        name="nip" value="<?= $detail_user[0]['nip']; ?>" />
+                                    <input class="form-control form-control-lg form-control-solid" type="text" name="nip" value="<?= $detail_user[0]['nip']; ?>" placeholder="Masukan Nomer NIP" autocomplete="off" />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 col-form-label" for="divisi">Divisi</label>
-                                <select class="form-control col-lg-9 col-xl-6" name="divisi">
-                                    <option value="">Divisi...</option>
-                                    <option value="MSDM">MSDM</option>
-                                    <option value="Jaringan">Jaringan</option>
-                                    <option value="Sekretaris">Sekretaris</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">Nomer Telepon</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <input type="text" name="nopel" value="<?= $detail_user[0]['nomer_telepon']; ?>"
-                                        class="form-control form-control-lg form-control-solid" placeholder="Phone" />
+                                    <input type="text" name="nopel" value="<?= $detail_user[0]['nomer_telepon']; ?>" class="form-control form-control-lg form-control-solid" placeholder="Masukan Nomer Telepon" autocomplete="off" />
                                 </div>
                             </div>
 
@@ -273,27 +228,39 @@
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label">Cari Nama Atasan</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <select class="form-control form-control-lg form-control-solid" id="cari_nama_atasan" name="cari_nama_atasan">
+                                        <option value="">Pilih Atasan</option>
+                                        <?php foreach ($detail_atasan as $dt_atasan) : ?>
+                                            <option value="<?= $dt_atasan['name'] ?>"><?= $dt_atasan['name'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">Nama Atasan</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text"
-                                        name="nama_atasan" value="<?= $detail_user[0]['nama_atasan']; ?>"
-                                        placeholder="Nama Atasan" />
+                                    <input type="text" name="nm_atasan" value="<?= $detail_user[0]['nama_atasan']; ?>" class="form-control form-control-lg form-control-solid" readonly />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">Email Atasan</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text"
-                                        name="em_atasan" value="<?= $detail_user[0]['em_atasan']; ?>"
-                                        placeholder="Email Atasan" />
+                                    <input type="text" name="em_atasan" value="<?= $detail_user[0]['em_atasan']; ?>" class="form-control form-control-lg form-control-solid" readonly />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-lg-3 col-form-label">Divisi</label>
+                                <div class="col-lg-9 col-xl-6">
+                                    <input type="text" name="divisi" value="<?= $detail_user[0]['divisi']; ?>" class="form-control form-control-lg form-control-solid" readonly />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 col-form-label">Nomor Atasan</label>
                                 <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text"
-                                        name="no_atasan" value="<?= $detail_user[0]['no_atasan']; ?>"
-                                        placeholder="Nomor Atasan" />
+                                    <input type="text" name="no_atasan" value="<?= $detail_user[0]['no_atasan']; ?>" class="form-control form-control-lg form-control-solid" readonly />
                                 </div>
                             </div>
                         </div>

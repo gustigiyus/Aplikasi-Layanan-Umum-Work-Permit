@@ -164,21 +164,12 @@
                             <!--end::Row-->
                             <!--begin::Row-->
                             <div class="row">
-                                <div class="col-xl-6">
+                                <div class="col-xl-12">
                                     <!--begin::Input-->
                                     <div class="form-group">
                                         <label class="font-size-h6 font-weight-bolder text-dark">Nama Perushaan</label>
                                         <input type="text" class="form-control form-control-solid h-auto py-7 px-6 border-0 rounded-lg font-size-h6" name="nm_perushaan" placeholder="Masukan nama Perusahaan" />
                                         <span class="form-text text-muted">Tolong masukan nama perusahaan anda.</span>
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-xl-6">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label class="font-size-h6 font-weight-bolder text-dark">Kota</label>
-                                        <input type="text" class="form-control form-control-solid h-auto py-7 px-6 border-0 rounded-lg font-size-h6" name="nm_kota" placeholder="Masukan nama Kota" />
-                                        <span class="form-text text-muted">Tolong masukan kota tempat anda tinggal sekarang.</span>
                                     </div>
                                     <!--end::Input-->
                                 </div>
@@ -196,7 +187,7 @@
                             <!--end::Title-->
                             <!--begin::Row-->
                             <div class="row">
-                                <div class="col-xl-4">
+                                <div class="col-xl-6">
                                     <!--begin::Input-->
                                     <div class="form-group">
                                         <label class="font-size-h6 font-weight-bolder text-dark">Tanggal Lahir</label>
@@ -204,15 +195,7 @@
                                     </div>
                                     <!--end::Input-->
                                 </div>
-                                <div class="col-xl-4">
-                                    <!--begin::Input-->
-                                    <div class="form-group">
-                                        <label class="font-size-h6 font-weight-bolder text-dark">Tempat Lahir</label>
-                                        <input type="text" name="tmp_lahir" class="form-control form-control-solid h-auto py-7 px-6 border-0 rounded-lg font-size-h6" placeholder="Tempat Lahir" required />
-                                    </div>
-                                    <!--end::Input-->
-                                </div>
-                                <div class="col-xl-4">
+                                <div class="col-xl-6">
                                     <!--begin::Select-->
                                     <div class="form-group">
                                         <label class="font-size-h6 font-weight-bolder text-dark">Jenis Kelamin</label>
@@ -247,38 +230,6 @@
                                     <!--end::Input-->
                                 </div>
                             </div>
-                            <!--begin::Row-->
-                            <div class="row">
-                                <div class="col-xl-12 m-auto">
-                                    <div class="form-group">
-                                        <div class="form-group text-center">
-                                            <label class="font-size-h6 font-weight-bolder text-dark">Foto KTP</label>
-                                        </div>
-                                        <div class="form-group text-center">
-                                            <div class="image-input image-input-outline" id="image_kt-1" style=" background-image: url(assets/media/users/blank.png)">
-                                                <div class="image-input-wrapper" style="background-image: url(assets/media/users/100_1.jpg)"></div>
-                                                <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Masukan Gambar">
-                                                    <i class="fa fa-pen icon-sm text-muted"></i>
-                                                    <input type="file" name="ft_ktp" accept=".png, .jpg, .jpeg" />
-                                                    <input type="hidden" name="profile_avatar_remove" />
-                                                </label>
-                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="Batalkan Gambar">
-                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                </span>
-                                                <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="Hapus Gambar">
-                                                    <i class="ki ki-bold-close icon-xs text-muted"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group text-center">
-                                            <span class="form-text text-muted">File yang dibolehkan JPG, JPEG dan PNG.</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--end::Input-->
-
-                            </div>
-                            <!--end::Row-->
                         </div>
                         <!--end: Wizard Step 3-->
                         <!--begin: Wizard Actions-->

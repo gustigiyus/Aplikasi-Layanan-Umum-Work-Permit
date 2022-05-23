@@ -61,7 +61,7 @@
                                     <span class="nav-icon">
                                         <i class="flaticon2-drop"></i>
                                     </span>
-                                    <span class="nav-text">Data Complain</span>
+                                    <span class="nav-text">Data Komplain</span>
                                 </a>
                             </li>
                         </ul>
@@ -74,35 +74,35 @@
                             <div class="card card-custom">
                                 <div class="card-body">
                                     <!--begin: Datatable-->
-                                    <table class="table table-hover table-bordered table-responsive" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="align-middle" style="text-align: center;">ID Complain</th>
-                                                <th class="align-middle" style="text-align: center;">Nama Kontraktor</th>
-                                                <th class="align-middle" style="text-align: center;">Nama Penanggung Jawab</th>
-                                                <th class="align-middle" style="text-align: center;">No Telepon Kantor</th>
-                                                <th class="align-middle" style="text-align: center;">Deskripsi Pekerjaan</th>
-                                                <th class="align-middle" style="text-align: center;">Waktu Mulai</th>
-                                                <th class="align-middle" style="text-align: center;">Waktu Akhir</th>
-                                                <th class="align-middle" style="text-align: center;">Tanggal Dikerjakan</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($izin as $izn) : ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-bordered" width="100%">
+                                            <thead>
                                                 <tr>
-                                                    <!-- Lihat data Email & Nama Buat Admin Complain -->
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['id_complain']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['nama_kontraktor']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['nama_penanggung_jawab']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['no_telp_kantor']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['deskripsi_pekerjaan']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['waktu_mulai']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['waktu_akhir']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $izn['tanggal_dikerjakan']; ?></td>
+                                                    <th class="align-middle" style="text-align: center;">Nama Kontraktor</th>
+                                                    <th class="align-middle" style="text-align: center;">Nama Penanggung Jawab</th>
+                                                    <th class="align-middle" style="text-align: center;">No Telepon Kantor</th>
+                                                    <th class="align-middle" style="text-align: center;">Deskripsi Pekerjaan</th>
+                                                    <th class="align-middle" style="text-align: center;">Waktu Mulai</th>
+                                                    <th class="align-middle" style="text-align: center;">Waktu Akhir</th>
+                                                    <th class="align-middle" style="text-align: center;">Tanggal Dikerjakan</th>
                                                 </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($izin as $izn) : ?>
+                                                    <tr>
+                                                        <!-- Lihat data Email & Nama Buat Admin Complain -->
+                                                        <td class="align-middle" style="text-align: center;"><?= $izn['nama_kontraktor']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $izn['nama_penanggung_jawab']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $izn['no_telp_kantor']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $izn['deskripsi_pekerjaan']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $izn['waktu_mulai']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $izn['waktu_akhir']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $izn['tanggal_dikerjakan']; ?></td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <!--end: Datatable-->
                                 </div>
                             </div>
@@ -113,40 +113,44 @@
                             <div class="card card-custom">
                                 <div class="card-body">
                                     <!--begin: Datatable-->
-                                    <table class="table table-hover table-bordered table-responsive" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th class="align-middle" style="text-align: center;">Email</th>
-                                                <th class="align-middle" style="text-align: center;">Nama Lengkap</th>
-                                                <th class="align-middle" style="text-align: center;">Judul Complain</th>
-                                                <th class="align-middle" style="text-align: center;">Deskripsi</th>
-                                                <th class="align-middle" style="text-align: center;">Keadaan</th>
-                                                <th class="align-middle" style="text-align: center;">Tingkat Bahaya</th>
-                                                <th class="align-middle" style="text-align: center;">Tanggal Diajukan</th>
-                                                <th class="align-middle" style="text-align: center;">Gambar</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php foreach ($complain as $comp) : ?>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover table-bordered" width="100%">
+                                            <thead>
                                                 <tr>
-
-                                                    <!-- Lihat data Email & Nama Buat Admin Complain -->
-                                                    <td class="align-middle" style="text-align: center;"><?= $comp['email']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $comp['nama']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $comp['judul_complain']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $comp['deskripsi']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $comp['keadaan']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $comp['tingkat_bahaya']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;"><?= $comp['tanggal_ajukan']; ?></td>
-                                                    <td class="align-middle" style="text-align: center;">
-                                                        <button class="btn btn-info" data-toggle="modal" data-target="#myModaldetailfoto<?PHP echo $comp['id']; ?>">
-                                                            Detail
-                                                        </button>
-                                                    </td>
+                                                    <th class="align-middle" style="text-align: center;">Email</th>
+                                                    <th class="align-middle" style="text-align: center;">Nama Lengkap</th>
+                                                    <th class="align-middle" style="text-align: center;">Judul Komplain</th>
+                                                    <th class="align-middle" style="text-align: center;">Deskripsi</th>
+                                                    <th class="align-middle" style="text-align: center;">Lokasi Pekerjaan</th>
+                                                    <th class="align-middle" style="text-align: center;">Keadaan</th>
+                                                    <th class="align-middle" style="text-align: center;">Tingkat Bahaya</th>
+                                                    <th class="align-middle" style="text-align: center;">Tanggal Diajukan</th>
+                                                    <th class="align-middle" style="text-align: center;">Gambar</th>
                                                 </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($complain as $comp) : ?>
+                                                    <tr>
+
+                                                        <!-- Lihat data Email & Nama Buat Admin Complain -->
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['email']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['nama']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['judul_complain']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['deskripsi']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['lokasi_pekerjaan']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['keadaan']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['tingkat_bahaya']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;"><?= $comp['tanggal_ajukan']; ?></td>
+                                                        <td class="align-middle" style="text-align: center;">
+                                                            <button class="btn btn-info" data-toggle="modal" data-target="#myModaldetailfoto<?PHP echo $comp['id']; ?>">
+                                                                Detail
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     <!--end: Datatable-->
                                 </div>
                             </div>

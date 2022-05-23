@@ -157,7 +157,7 @@
 								e.preventDefault();
 								$.ajax({
 									type: 'ajax',
-									url: "<?= base_url('workpermit/formtambahbanyak/' . $izn['id'] . "/" . $izn['id_complain']); ?>",
+									url: "<?= base_url('workpermit/formtambahbanyak/' . $izn['id'] . "/" . $izn['id_complain'] . "/" . $izn['lokasi_pekerjaan']); ?>",
 									dataType: "json",
 									beforeSend: function() {
 										$('.viewdata').html('<i class="fa fa-spin fa-spinner"></i>')

@@ -5,6 +5,7 @@ class Beranda extends CI_Controller
 {
     public function index()
     {
+        $data['title'] = 'Beranda';
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['user2'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->result_array();
         $this->load->model('Profile_model', 'PM');

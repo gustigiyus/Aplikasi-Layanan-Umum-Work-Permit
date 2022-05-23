@@ -11,8 +11,7 @@
 
                     <?= $this->session->flashdata('message'); ?>
 
-                    <a href="" class="btn btn-primary btn-icon-split mb-3" data-toggle="modal"
-                        data-target="#newRoleModal">
+                    <a href="" class="btn btn-primary btn-icon-split mb-3" data-toggle="modal" data-target="#newRoleModal">
 
                         <span class="icon">
                             <i class="fa fa-plus"></i>
@@ -24,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="table-responsive mt-3 col-auto">
+        <div class="table-responsive mt-3 mb-3 col-auto">
             <table id="complain" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
                 <thead>
                     <tr>
@@ -36,18 +35,18 @@
                 <tbody>
                     <?php $i = 1; ?>
                     <?php foreach ($role as $r) : ?>
-                    <tr>
-                        <td scope="row" class="align-middle" style="text-align: center;"><?= $i; ?></td>
-                        <td><?= $r['role']; ?></td>
-                        <td class="align-middle" style="text-align: center;">
-                            <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-success">Hak
-                                Akses</a>
-                            <a href="" class="badge badge-warning">Ubah</a>
-                            <a href="" class="badge badge-danger">Hapus</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td scope="row" class="align-middle" style="text-align: center;"><?= $i; ?></td>
+                            <td><?= $r['role']; ?></td>
+                            <td class="align-middle" style="text-align: center;">
+                                <a href="<?= base_url('admin/roleaccess/') . $r['id']; ?>" class="badge badge-success">Hak
+                                    Akses</a>
+                                <a href="" class="badge badge-warning">Ubah</a>
+                                <a href="" class="badge badge-danger">Hapus</a>
+                            </td>
+                        </tr>
 
-                    <?php $i++; ?>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -61,8 +60,6 @@
 <!-- End of Main Content -->
 
 <!-- MODAL -->
-
-<!-- Modal -->
 <div class="modal fade" id="newRoleModal" tabindex="-1" role="dialog" aria-labelledby="newRoleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -72,7 +69,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('admin/role'); ?>" method="post">
+            <form action="<?= base_url('admin/addrole'); ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="text" class="form-control" name="role" id="role" placeholder="Nama Role">

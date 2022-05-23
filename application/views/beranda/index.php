@@ -77,8 +77,8 @@
                             <!--end::Icon-->
                             <!--begin::Content-->
                             <div class="d-flex flex-column">
-                                <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">Complain</a>
-                                <div class="text-dark-75">Ajukan Complain Anda</div>
+                                <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">Komplen</a>
+                                <div class="text-dark-75">Ajukan Komplen Anda</div>
                             </div>
                             <!--end::Content-->
                         </div>
@@ -109,7 +109,7 @@
                             <!--begin::Content-->
                             <div class="d-flex flex-column">
                                 <a href="#" class="text-dark text-hover-primary font-weight-bold font-size-h4 mb-3">Workpermit</a>
-                                <div class="text-dark-75">Ajukan Workpermit Anda</div>
+                                <div class="text-dark-75">Ajukan Izin Kerja Anda</div>
                             </div>
                             <!--end::Content-->
                         </div>

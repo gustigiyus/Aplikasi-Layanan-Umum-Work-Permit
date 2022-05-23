@@ -55,16 +55,14 @@
                 <!--begin::Form-->
                 <div id="main">
                   <div id="header">
-                    <h1 style="text-align: center;">Seret & letakan Foto kesini</h1>
+                    <h1 style="text-align: center;">Seret & letakan Foto Setelah Kerja kesini</h1>
                   </div>
                 </div>
 
                 <!--Bagian::Form Upload Foto Akhir-->
                 <form class="dropzone" id="file_upload_akhir">
-                  <?php foreach ($complain as $c) : ?>
-                    <input type="text" name="id_complain" value="<?= $c['id']; ?>" hidden>
-                  <?php endforeach; ?>
                   <?php foreach ($izin as $iz) : ?>
+                    <input type="text" name="id_complain" value="<?= $iz['id_complain']; ?>" hidden>
                     <input type="text" name="id_izin_kerja" value="<?= $iz['id']; ?>" hidden>
                   <?php endforeach; ?>
                   <div class="dz-message">
@@ -78,14 +76,12 @@
                 <!--Bagian::Form Upload TTD-->
                 <div id="main">
                   <div id="header">
-                    <h1 style="text-align: center;">Seret & letakan Foto kesini</h1>
+                    <h1 style="text-align: center;">Seret & letakan Foto TTD kesini</h1>
                   </div>
                 </div>
                 <form class="dropzone" id="file_upload_ttd">
-                  <?php foreach ($complain as $c) : ?>
-                    <input type="text" name="id_complain" value="<?= $c['id']; ?>" hidden>
-                  <?php endforeach; ?>
                   <?php foreach ($izin as $iz) : ?>
+                    <input type="text" name="id_complain" value="<?= $iz['id_complain']; ?>" hidden>
                     <input type="text" name="id_izin_kerja" value="<?= $iz['id']; ?>" hidden>
                   <?php endforeach; ?>
                   <div class="dz-message">

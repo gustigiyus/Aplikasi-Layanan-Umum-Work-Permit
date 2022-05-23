@@ -23,7 +23,7 @@
                         <!--end::Item-->
                         <!--begin::Item-->
                         <span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
-                        <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">Complain</a>
+                        <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">Komplain</a>
                         <!--end::Item-->
                     </div>
                     <!--end::Breadcrumb-->
@@ -50,48 +50,40 @@
                         <span class="card-icon">
                             <i class="fas fa-head-side-cough text-info"></i>
                         </span>
-                        <h3 class="card-label"> <?= $title ?></h3>
+                        <h3 class="card-label"> Tabel Data Komplain</h3>
                     </div>
 
                     <?php if ($this->session->userdata('role_id') == 2 || $this->session->userdata('role_id') == 4) : ?>
                         <div class="card-toolbar">
                             <!--begin::Button-->
-                            <a href="#" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#AddComplainModal">
-                                <span class="svg-icon svg-icon-md">
-                                    <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Flatten.svg-->
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <circle fill="#000000" cx="9" cy="15" r="6" />
-                                            <path d="M8.8012943,7.00241953 C9.83837775,5.20768121 11.7781543,4 14,4 C17.3137085,4 20,6.6862915 20,10 C20,12.2218457 18.7923188,14.1616223 16.9975805,15.1987057 C16.9991904,15.1326658 17,15.0664274 17,15 C17,10.581722 13.418278,7 9,7 C8.93357256,7 8.86733422,7.00080962 8.8012943,7.00241953 Z" fill="#000000" opacity="0.3" />
-                                        </g>
-                                    </svg>
-                                    <!--end::Svg Icon-->
-                                </span>Complain Baru</a>
+                            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                <a disabled style="pointer-events: none; border-bottom-left-radius: 7px; border-top-left-radius: 7px;" href="#" class="btn btn-light-primary btn-md btn-icon pulse pulse-dark btn-square">
+                                    <i class="flaticon2-plus text-danger"></i>
+                                    <span class="pulse-ring"></span>
+                                </a>
+                                <a href="#" style="border-bottom-right-radius: 7px; border-top-right-radius: 7px;" class="btn btn-primary btn-md font-weight-boldest btn-square" data-toggle="modal" data-target="#AddComplainModal">Tambah Komplain Baru</a>
+
+                            </div>
                             <!--end::Button-->
                         </div>
                     <?php endif; ?>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <!--begin: Datatable-->
-                    <table class="table table-separate table-head-custom" id="tablecomplain">
+                    <table class="table table-separate table-head-custom" id="tabel_data_complain">
                         <thead>
                             <tr>
                                 <th class="align-middle" style="text-align: center;">#</th>
-                                <?php if ($this->session->userdata('role_id') == 1 || $this->session->userdata('role_id') == 3) : ?>
-                                    <th class="align-middle" style="text-align: center;">Email</th>
-                                    <th class="align-middle" style="text-align: center;">Nama Lengkap</th>
-                                <?php endif; ?>
-                                <th class="align-middle" style="text-align: center;">Judul Complain</th>
-                                <th class="align-middle" style="text-align: center;">Deskripsi</th>
+                                <th class="align-middle" style="text-align: center;">Judul Komplain</th>
+                                <th class="align-middle" style="text-align: center; min-width: 200px;">Deskripsi</th>
+                                <th class="align-middle" style="text-align: center; min-width: 200px;">Lokasi Pekerjaan</th>
                                 <th class="align-middle" style="text-align: center;">Keadaan</th>
-                                <th class="align-middle" style="text-align: center;">Tingkat Bahaya</th>
+                                <th class="align-middle" style="text-align: center; min-width: 120px;">Tingkat Bahaya</th>
                                 <th class="align-middle" style="text-align: center;">Tanggal Diajukan</th>
                                 <th class="align-middle" style="text-align: center;">Gambar</th>
                                 <?php if ($this->session->userdata('role_id') == 2 || $this->session->userdata('role_id') == 4) : ?>
-                                    <th class="align-middle" style="text-align: center;">Status</th>
-                                <?php endif; ?>
-                                <?php if ($this->session->userdata('role_id') == 2 || $this->session->userdata('role_id') == 4) : ?>
+                                    <th class="align-middle" style="text-align: center;">Status Komplain</th>
+                                    <th class="align-middle" style="text-align: center;">Status Kerja</th>
                                     <th class="align-middle" style="text-align: center;">Tindakan</th>
                                 <?php endif; ?>
                             </tr>
@@ -110,50 +102,127 @@
 
                                     <td class="align-middle" style="text-align: center;"><?= $comp['judul_complain']; ?></td>
                                     <td class="align-middle" style="text-align: center;"><?= $comp['deskripsi']; ?></td>
+                                    <td class="align-middle" style="text-align: center;"><?= $comp['lokasi_pekerjaan']; ?></td>
                                     <td class="align-middle" style="text-align: center;"><?= $comp['keadaan']; ?></td>
                                     <td class="align-middle" style="text-align: center;"><?= $comp['tingkat_bahaya']; ?></td>
                                     <td class="align-middle" style="text-align: center;"><?= $comp['tanggal_ajukan']; ?></td>
                                     <td class="align-middle" style="text-align: center;">
-                                        <button class="btn btn-info" data-toggle="modal" data-target="#myModaldetailfoto<?PHP echo $comp['id']; ?>">
-                                            Detail
-                                        </button>
+                                        <a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModaldetailfoto<?PHP echo $comp['id']; ?>">
+                                            <i class="fas fa-binoculars"></i> Lihat
+                                        </a>
                                     </td>
-
 
                                     <!-- Status Buat Karyawan -->
                                     <?php if ($this->session->userdata('role_id') == 2 || $this->session->userdata('role_id') == 4) : ?>
                                         <?php if ($comp['status_complain'] == 'Pending') : ?>
-                                            <td class="align-middle">
-                                                <span class="badge badge-warning"><?= $comp['status_complain']; ?></span>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest">40%</span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Menunggu Konfirmasi Dari Officer Umum" class="badge badge-warning"><?= $comp['status_complain']; ?></span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         <?php elseif ($comp['status_complain'] == 'Complain Disetujui') : ?>
-                                            <td class="align-middle">
-                                                <span class="badge badge-primary"><?= $comp['status_complain']; ?></span>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest">80%</span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Komplain Berhasil Disetujui" class="badge badge-primary">Komplain Disetujui</span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
                                             </td>
-                                        <?php else : ?>
-                                            <td class="align-middle">
-                                                <span class="badge badge-success"><?= $comp['status_complain']; ?></span>
+                                        <?php elseif ($comp['status_complain'] == 'Selesai') : ?>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest">100%</span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Proses Komplain Telah Selesai Dikerjakan" class="badge badge-dark">Selesai</span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         <?php endif; ?>
+
+                                        <?php if ($comp['status_kerja'] == 'Pending') : ?>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest"><i class="fas fa-sync fa-spin"></i></span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Menunggu Komplain Dikerjakan" class="badge badge-warning">Menunggu Dikerjakan</span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        <?php elseif ($comp['status_kerja'] == 'Izin Kerja Disetujui') : ?>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest">25%</span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Menunggu Komplain Dikerjakan" class="badge badge-warning">Menunggu Dikerjakan</span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        <?php elseif ($comp['status_kerja'] == 'Sedang Dikerjakan') : ?>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest">50%</span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Komplain Sedang Dikerjakan Oleh Tennat" class="badge badge-primary">Sedang Dikerjakan</span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        <?php elseif ($comp['status_kerja'] == 'Selesai Dikerjakan') : ?>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest">75%</span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Komplain Telah Dikerjakan Oleh Tenant" class="badge badge-info">Sedang Dikerjakan</span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        <?php elseif ($comp['status_kerja'] == 'Selesai') : ?>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <div class="d-flex flex-column w-100 mr-2">
+                                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                                        <span class="text-dark mr-2 font-size-sm font-weight-boldest">100%</span>
+                                                        <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Proses Komplain Telah Selesai Dikerjakan" class="badge badge-dark">Selesai Dikerjakan</span>
+                                                    </div>
+                                                    <div class="progress progress-xs w-100">
+                                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        <?php endif; ?>
+
                                     <?php endif; ?>
 
                                     <td class="align-middle" style="text-align: center;">
                                         <!-- action buat Karyawan -->
                                         <?php if ($this->session->userdata('role_id') == 2 || $this->session->userdata('role_id') == 4) : ?>
                                             <?php if ($comp['status_complain'] == "Pending") : ?>
-                                                <a href="" title="Edit" data-toggle="modal" data-target="#editcomplain<?= $comp['id']; ?>"><i style="color: orange;" class="fas fa-pencil-alt"></i></a>
+                                                <a data-placement="bottom" href="" title="Edit" data-toggle="modal" data-target="#editcomplain<?= $comp['id']; ?>"><i style="color: orange;" class="fas fa-pencil-alt"></i></a>
                                             <?php else : ?>
                                                 <a style="opacity: 0.65; cursor: not-allowed;" href="#"><i style="color: orange;" class="fas fa-pencil-alt"></i></a>
-                                            <?php endif; ?>
-
-                                            <!-- Ubah Status Admin Tenant -->
-                                        <?php elseif ($this->session->userdata('role_id') == 4) : ?>
-                                            <?php if ($comp['status_complain'] == "Complain Disetujui") : ?>
-                                                <a href="" class="btn btn-warning" data-toggle="modal" data-target="#myModaleditStatus<?PHP echo $comp['id']; ?>"><?= $comp['status_complain']; ?></a>
-                                            <?php elseif ($comp['status_complain'] == "Izin Kerja Disetujui") : ?>
-                                                <a href="" class="btn btn-warning" data-toggle="modal" data-target="#myModaleditStatus<?PHP echo $comp['id']; ?>"><?= $comp['status_complain']; ?></a>
-                                            <?php elseif ($comp['status_complain'] == "Sedang Dikerjakan") : ?>
-                                                <a href="" class="btn btn-success" data-toggle="modal" data-target="#myModaleditStatus<?PHP echo $comp['id']; ?>"><?= $comp['status_complain']; ?></a>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </td>
@@ -177,14 +246,14 @@
 <!-- Modal Gambar-->
 <?php foreach ($complain as $comp) : ?>
     <!-- Detail Gambar -->
-    <div class="modal fade" id="myModaldetailfoto<?PHP echo $comp['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModaldetailfotoLabel" aria-hidden="true">
+    <div class="modal fade" id="myModaldetailfoto<?PHP echo $comp['id']; ?>" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModaldetailfotoLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                <div class="modal-header">
+                    <h5 style="font-weight: bolder;" class="modal-title justify-content-center" id="myModaldetailfotoTitle">Detail Gambar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
-                    <h4 class="title title-up">Detail Gambar</h4>
                 </div>
                 <div class="modal-body">
                     <div class="fg-gallery cols-3">
@@ -203,13 +272,13 @@
 <?php endforeach; ?>
 
 <!-- Modal Add Data Complain(untuk user) -->
-<div class="modal fade" id="AddComplainModal" tabindex="-1" role="dialog" aria-labelledby="AddComplainModaldataLabel">
+<div class="modal fade" id="AddComplainModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="AddComplainModaldataLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content text-center">
             <div class="modal-header">
-                <h5 style="font-weight: bolder;" class="modal-title" id="AddComplainModaldataLabel">Tambah Complain</h5>
+                <h5 style="font-weight: bolder;" class="modal-title" id="AddComplainModaldataTitle">Tambah Komplain</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
             <form action="<?= base_url('permintaan/addComplain'); ?>" method="POST" novalidate="novalidate" id="kt_add_complain_form" enctype="multipart/form-data">
@@ -217,23 +286,23 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="email" style="color: black; float: left;">Email</label>
-                            <input type="email" class="form-control" name="email" value="<?= $this->session->userdata('email'); ?>" readonly>
+                            <input type="email" class="form-control form-control-solid" name="email" value="<?= $this->session->userdata('email'); ?>" readonly>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="nama" style="color: black; float: left;">Nama Lengkap</label>
-                            <input type="text" class="form-control" name="nama" value="<?= $this->session->userdata('name'); ?>" readonly>
+                            <input type="text" class="form-control form-control-solid" name="nama" value="<?= $this->session->userdata('name'); ?>" readonly>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label class="form-control-label" style="color: black; float: left;">Judul Complain</label>
-                            <input autocomplete="off" type="text" class="form-control" name="judul_complain">
+                            <label class="form-control-label" style="color: black; float: left;">Judul Komplain</label>
+                            <input autocomplete="off" type="text" placeholder="Masukan judul complain" class="form-control" name="judul_complain">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="keadaan" style="color: black; float: left;">keadaan</label>
                             <select class="form-control" name="keadaan">
-                                <option value="">Pilih...</option>
+                                <option value="">- Pilih -</option>
                                 <option value="Rusak Ringan">Rusak Ringan</option>
                                 <option value="Rusak Sedang">Rusak Sedang</option>
                                 <option value="Rusak Berat">Rusak Berat</option>
@@ -242,7 +311,11 @@
                     </div>
                     <div class="form-group">
                         <label for="deskripsi" style="color: black; float: left;">Deskripsi</label>
-                        <textarea class="form-control" name="deskripsi" rows="3"></textarea>
+                        <textarea class="form-control" placeholder="Masukan deskripsi dari complain yang akan dibuat" name="deskripsi" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="lokasi_pekerjaan" style="color: black; float: left;">Lokasi Pekerjaan</label>
+                        <textarea class="form-control" placeholder="Masukan Lokasi pekerjaan dari complain yang akan dibuat" name="lokasi_pekerjaan" rows="3"></textarea>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -252,7 +325,7 @@
                         <div class="form-group col-md-6">
                             <label for="tingkat_bahaya" style="color: black; float: left;">Tingkat Bahaya</label>
                             <select class="form-control" name="tingkat_bahaya">
-                                <option value="">Pilih...</option>
+                                <option value="">- Pilih -</option>
                                 <option value="Pekerjaan Bersiko Tinggi">Pekerjaan Bersiko Tinggi</option>
                                 <option value="Pekerjaan Bersiko Rendah">Pekerjaan Bersiko Rendah</option>
                             </select>
@@ -308,13 +381,13 @@
 
 <!-- Modal Edit Data Complain(untuk user) -->
 <?php foreach ($complain as $comp) : ?>
-    <div class="modal fade" id="editcomplain<?= $comp['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="AddComplainModaldataLabel">
+    <div class="modal fade" id="editcomplain<?= $comp['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="EditComplainModaldataLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 style="font-weight: bolder;" class="modal-title" id="AddComplainModaldataLabel">Edit Complain</h5>
+                    <h5 style="font-weight: bolder;" class="modal-title" id="EditComplainModaldataLabel">Edit Komplain</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <i aria-hidden="true" class="ki ki-close"></i>
                     </button>
                 </div>
                 <form enctype="multipart/form-data" action="<?= base_url('permintaan/editComplain/') . $comp['id'] ?>" method="POST">
@@ -331,7 +404,7 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="judul_complain">Judul Complain</label>
+                                <label for="judul_complain">Judul Komplain</label>
                                 <input type="text" class="form-control" name="judul_complain" id="judul_complain" value="<?= $comp['judul_complain']; ?>" required>
                             </div>
                             <div class="form-group col-md-6">
@@ -360,6 +433,10 @@
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi</label>
                             <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required><?= $comp['deskripsi']; ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ed_lokasi_perkejaan">Lokasi Pekerjaan</label>
+                            <textarea class="form-control" id="ed_lokasi_perkejaan" name="ed_lokasi_pekerjaan" rows="3" required><?= $comp['lokasi_pekerjaan']; ?></textarea>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -395,8 +472,8 @@
                                         <img src="<?= base_url('assets/img/complain/') . $comp['gambar']; ?>" class="img-thumbnail">
                                     <?php } ?>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="new_image0">
-                                        <label class="custom-file-label" for="image">Pilih Gambar<label>
+                                        <input type="file" class="custom-file-input" name="new_image0">
+                                        <label class="custom-file-label">Pilih Gambar<label>
                                     </div>
                                     <input hidden type="text" value="<?= $comp['gambar']; ?>" name="old_image1">
                                 </div>
@@ -411,8 +488,8 @@
                                         <img src="<?= base_url('assets/img/complain/') . $comp['gambar2']; ?>" class="img-thumbnail">
                                     <?php } ?>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="new_image1">
-                                        <label class="custom-file-label" for="image">Pilih Gambar<label>
+                                        <input type="file" class="custom-file-input" name="new_image1">
+                                        <label class="custom-file-label">Pilih Gambar<label>
                                     </div>
                                     <input hidden type="text" value="<?= $comp['gambar2']; ?>" name="old_image2">
                                 </div>
@@ -427,8 +504,8 @@
                                         <img src="<?= base_url('assets/img/complain/') . $comp['gambar3']; ?>" class="img-thumbnail">
                                     <?php } ?>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="new_image2">
-                                        <label class="custom-file-label" for="image">Pilih Gambar<label>
+                                        <input type="file" class="custom-file-input" name="new_image2">
+                                        <label class="custom-file-label">Pilih Gambar<label>
                                     </div>
                                     <input hidden type="text" value="<?= $comp['gambar3']; ?>" name="old_image3">
                                 </div>
@@ -436,7 +513,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Kembali</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Kembali</button>
                         <button type="submit" class="btn btn-success">Simpan</button>
                     </div>
                 </form>

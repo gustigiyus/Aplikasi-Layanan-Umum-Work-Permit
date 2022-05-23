@@ -5,7 +5,7 @@ var KTDatatablesExtensionButtons = function() {
 
 		// begin first table
 		var table = $('#tablecomplain').DataTable({
-			responsive: true,
+			"scrollX": true,
 		});
 	};
 

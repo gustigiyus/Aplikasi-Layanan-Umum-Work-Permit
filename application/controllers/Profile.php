@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profile extends CI_Controller
 {
+    //Halaman Profile//
     public function myprofile()
     {
         $data['title'] = 'My Profile';
@@ -11,6 +12,7 @@ class Profile extends CI_Controller
         $this->load->model('Profile_model', 'PM');
         $data['role_user'] = $this->PM->role_user()->result_array();
         $data['detail_user'] = $this->PM->detailuser()->result_array();
+        $data['detail_atasan'] = $this->db->get_where('user', ['role_id' => 5])->result_array();
 
         $this->load->view('templates/user_template/header_user', $data);
         $this->load->view('templates/user_template/navbar_user', $data);
@@ -19,6 +21,16 @@ class Profile extends CI_Controller
         $this->load->view('templates/user_template/footer_user');
     }
 
+    //Proses pencarian Nama Atasan//
+    public function proses_pencarian_nama_atasan()
+    {
+        $this->load->model('Profile_model', 'PM');
+        $cari_nama_atasan = $this->input->post('nama_atasan');
+        $data = $this->PM->get_data_atasan($cari_nama_atasan);
+        echo json_encode($data);
+    }
+
+    //Proses Ubah Kata Sandi//
     public function changepassword()
     {
         $data['title'] = 'Change Password';
@@ -100,6 +112,7 @@ class Profile extends CI_Controller
         }
     }
 
+    //Proses edit Profile//
     public function edit()
     {
         $data['title'] = 'Edit Profile';
@@ -147,7 +160,7 @@ class Profile extends CI_Controller
             $this->db->where('email', $email);
             $this->db->update('user');
 
-            $upload_imagektp = $_FILES['fktp'];
+            /*  $upload_imagektp = $_FILES['fktp'];
             $old_imagektp = $this->input->post('old_ktp');
             $gambar = $upload_imagektp;
             $gambarlama = $old_imagektp;
@@ -168,22 +181,34 @@ class Profile extends CI_Controller
             } else {
                 $upload_image = $gambarlama;
             }
+            */
 
-            $data = [
+            $data1 = [
+                'nama' => $this->input->post('name'),
                 'nip' => $this->input->post('nip'),
                 'nomer_telepon' => $this->input->post('nopel'),
                 'divisi' => $this->input->post('divisi'),
-                'nama_atasan' => $this->input->post('nama_atasan'),
-                'em_atasan' => $this->input->post('em_atasan'),
+                'nama_atasan' => $this->input->post('nm_atasan'),
                 'no_atasan' => $this->input->post('no_atasan'),
+                'em_atasan' => $this->input->post('em_atasan'),
                 // 'kota' => $this->input->post('kota'),
                 // 'tempat_lahir' => $this->input->post('tempat_lahir'),
                 // 'tanggal_lahir' => $this->input->post('tanggal_lahir'),
                 // 'nomer_ktp' => $this->input->post('nktp'),
                 // 'foto_ktp' => $upload_image
             ];
+
             $this->db->where('email', $email);
-            $this->db->update('detail_user', $data);
+            $this->db->update('detail_user', $data1);
+
+            $data2 = [
+                'name' => $this->input->post('name')
+            ];
+
+            $this->db->where('email', $email);
+            $this->db->update('user', $data2);
+
+
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Your Profile has been update!</div>');
             redirect('profile/myprofile');
         }

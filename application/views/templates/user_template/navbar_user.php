@@ -114,7 +114,7 @@
 
                                         <div class="menu-submenu menu-submenu-classic menu-submenu-left">
                                             <ul class="menu-subnav">
-												<?php
+                                                <?php
                                                 $queryssMenu = "SELECT `user_ss_menu`.*, `user_ss_menu`.`id` AS 'id_ss', `user_menu`.*
                                                                     FROM  `user_ss_menu` JOIN `user_menu`
                                                                     ON    `user_ss_menu`.`menu_id` = `user_menu`.`id`
@@ -123,7 +123,7 @@
                                                                     ";
                                                 $ssmenu = $this->db->query($queryssMenu)->result_array();
                                                 ?>
-												<!--begin::SSmenu-->
+                                                <!--begin::SSmenu-->
                                                 <?php foreach ($ssmenu as $ssm) : ?>
                                                     <li class="menu-item menu-item-submenu" data-menu-toggle="hover" aria-haspopup="true">
                                                         <a href="#" class="menu-link menu-toggle">
@@ -145,7 +145,7 @@
                                                                 $treeMenu = $this->db->query($queryssMenu)->result_array();
 
                                                                 ?>
-																<?php foreach ($treeMenu as $tm) : ?>
+                                                                <?php foreach ($treeMenu as $tm) : ?>
                                                                     <li class="menu-item" aria-haspopup="true">
                                                                         <a href="<?= base_url('/') . $tm['url'] ?>" class="menu-link">
                                                                             <i class="<?= $tm['icon'] ?>">
@@ -156,17 +156,19 @@
                                                                     </li>
                                                                 <?php endforeach; ?>
                                                                 <!--end::Treemenu-->
-															</ul>
-														</div>
-												</li>
-												<?php endforeach; ?>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                <?php endforeach; ?>
                                                 <!--end::SSubmenu-->
                                                 <!--begin::MulaiSubmenu-->
                                                 <?php foreach ($subMenu as $sm) : ?>
                                                     <li class="menu-item" aria-haspopup="true">
                                                         <a href="<?= base_url($sm['url']); ?>" class="menu-link">
+                                                            <span class="svg-icon menu-icon">
+                                                                <i class="<?= $sm['icon'] ?>"></i>
+                                                            </span>
                                                             <span class="menu-text"> <?= $sm['title']; ?></span>
-                                                            <span class="menu-desc"></span>
                                                         </a>
                                                     </li>
                                                 <?php endforeach; ?>

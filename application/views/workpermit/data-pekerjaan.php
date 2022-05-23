@@ -8,7 +8,7 @@
                 <!--begin::Heading-->
                 <div class="d-flex flex-column">
                     <!--begin::Title-->
-                    <h2 class="text-white font-weight-bold my-2 mr-5">Work Permit</h2>
+                    <h2 class="text-white font-weight-bold my-2 mr-5">Kegiatan Kerja</h2>
                     <!--end::Title-->
                     <!--begin::Breadcrumb-->
                     <div class="d-flex align-items-center font-weight-bold my-2">
@@ -19,7 +19,7 @@
                         <!--end::Item-->
                         <!--begin::Item-->
                         <span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
-                        <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">Work Permit</a>
+                        <a href="" class="text-white text-hover-white opacity-75 hover-opacity-100">Izin Kerja</a>
                         <!--end::Item-->
                         <!--begin::Item-->
                         <span class="label label-dot label-sm bg-white opacity-75 mx-3"></span>
@@ -54,7 +54,7 @@
                         <!--end::Svg Icon-->
                     </span>
                 </div>
-                <div class="alert-text">Pada Halaman ini hanya menampilkan <b> Data izin kerja yang telah disetujui oleh Admin </b> dan dihalaman ini juga, anda dapat mengisi Foto kegiatan sebelum dan sesudah kerja.
+                <div class="alert-text">Pada Halaman ini menampilkan anda dapat mengisi Foto kegiatan sebelum dan sesudah kerja.
                 </div>
             </div>
             <?= $this->session->flashdata('message'); ?>
@@ -72,76 +72,126 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="kt_tab_pane_2_3" role="tabpanel" aria-labelledby="kt_tab_pane_2_3">
+                        <div class="tab-pane fade show active">
                             <!--begin::Card-->
                             <div class="card card-custom">
-                                <div class="card-body">
+                                <div class="card-body table-responsive">
                                     <!--begin: Datatable-->
-                                    <table class="table table-bordered table-hover table-checkable table-responsive" id="table_row" width="100%">
+                                    <table class="table table-hover table-head-custom" id="tabel-data-pekerjaan">
                                         <thead>
                                             <tr>
-                                                <th class="align-middle" style="text-align: center;">Email</th>
-                                                <th class="align-middle" style="text-align: center;">Nama Lengkap</th>
-                                                <th class="align-middle" style="text-align: center;">Judul Complain</th>
-                                                <th class="align-middle" style="text-align: center;">Deskripsi</th>
-                                                <th class="align-middle" style="text-align: center;">Keadaan</th>
-                                                <th class="align-middle" style="text-align: center;">Tingkat Bahaya</th>
-                                                <th class="align-middle" style="text-align: center;">Tanggal Diajukan</th>
+                                                <th class="align-middle" style="text-align: center;">#</th>
+                                                <th class="align-middle" style="text-align: center;">Nama Kontraktor</th>
+                                                <th class="align-middle" style="text-align: center;">Nama Penangung Jawab</th>
+                                                <th class="align-middle" style="text-align: center;">No Telp Kantor</th>
+                                                <th class="align-middle" style="text-align: center;">Deskripsi Pekerjaan</th>
+                                                <th class="align-middle" style="text-align: center;">Waktu Mulai</th>
+                                                <th class="align-middle" style="text-align: center;">Waktu Akhir</th>
+                                                <th class="align-middle" style="text-align: center;">Tanggal Dikerjakan</th>
                                                 <th class="align-middle" style="text-align: center;">Status Kerja</th>
-                                                <th class="align-middle" style="text-align: center;">Detail Izin Kerja</th>
-                                                <th class="align-middle" style="text-align: center;">Detail Pekerja</th>
-                                                <th class="align-middle" style="text-align: center;">Detail Lainnya</th>
-                                                <th class="align-middle" style="text-align: center;">Detail Gambar</th>
+                                                <th class="align-middle" style="text-align: center;">Data Komplain</th>
+                                                <th class="align-middle" style="text-align: center;">Data Pekerja</th>
+                                                <th class="align-middle" style="text-align: center;">Data Perlengkapan</th>
+                                                <th class="align-middle" style="text-align: center;">Data Mulai & Akhir Kerja</th>
+                                                <th class="align-middle" style="text-align: center;">Tindakan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($complain as $comp) : ?>
+                                            <?php $i = 1; ?>
+                                            <?php foreach ($izin_kerja as $izn_krj) : ?>
                                                 <tr>
-                                                    <!-- Lihat data Email & Nama Buat Admin Complain -->
-                                                    <td class="align-middle"><?= $comp['email']; ?></td>
-                                                    <td class="align-middle"><?= $comp['nama']; ?></td>
-                                                    <td class="align-middle"><?= $comp['judul_complain']; ?></td>
-                                                    <td class="align-middle"><?= $comp['deskripsi']; ?></td>
-                                                    <td class="align-middle"><?= $comp['keadaan']; ?></td>
-                                                    <td class="align-middle"><?= $comp['tingkat_bahaya']; ?></td>
-                                                    <td class="align-middle"><?= $comp['tanggal_ajukan']; ?></td>
-                                                    <td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $i; ?></td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $izn_krj['nama_kontraktor']; ?></td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $izn_krj['nama_penanggung_jawab']; ?></td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $izn_krj['no_telp_kantor']; ?></td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $izn_krj['deskripsi_pekerjaan']; ?></td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $izn_krj['waktu_mulai']; ?></td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $izn_krj['waktu_akhir']; ?></td>
+                                                    <td class="align-middle" style="text-align: center;"><?= $izn_krj['tanggal_dikerjakan']; ?></td>
 
-                                                        <?php if ($comp['status_complain'] == "Izin Kerja Disetujui") : ?>
-                                                            <a href="<?= base_url("pekerjaan/mulai/" . $comp['id_complain']) ?>" class="btn btn-warning">Mulai Pekerjaan</a>
-                                                        <?php elseif ($comp['status_complain'] == "Sedang Dikerjakan") : ?>
-                                                            <a href="<?= base_url("pekerjaan/akhir/" . $comp['id_complain']) ?>" class="btn btn-success">Akhiri Pekerjaan</a>
-                                                        <?php else : ?>
-                                                            <a href="" class="btn btn-success disabled" data-toggle="modal" data-target="#myModaleditStatus<?PHP echo $comp['id']; ?>"><?= $comp['status_complain']; ?></a>
-                                                        <?php endif; ?>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <div class="float-right">
-                                                            <button class="btn btn-info" data-toggle="modal" data-target="#izin<?= $comp['id_complain']; ?>">
-                                                                Detail
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <div class="float-right">
-                                                            <button class="btn btn-info" data-toggle="modal" data-target="#pekerjaan<?= $comp['id_complain']; ?>">
-                                                                Detail
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <div class="float-right">
-                                                            <button class="btn btn-info" data-toggle="modal" data-target="#detaiil<?= $comp['id_complain']; ?>">
-                                                                Detail
-                                                            </button>
-                                                        </div>
-                                                    </td>
-                                                    <td class="align-middle">
-                                                        <button class="btn btn-info" data-toggle="modal" data-target="#gambarmodalcomp<?PHP echo $comp['id']; ?>">
+                                                    <?php if ($izn_krj['status_izin_kerja'] == 'Izin Kerja Disetujui') : ?>
+                                                        <td class="align-middle" style="text-align: center;">
+                                                            <div class="d-flex flex-column w-100 mr-2">
+                                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                                    <span class="text-dark mr-2 font-size-sm font-weight-boldest">25%</span>
+                                                                    <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Izin Kerja berhasil disetujui" class="badge badge-primary"><?= $izn_krj['status_izin_kerja']; ?></span>
+                                                                </div>
+                                                                <div class="progress progress-xs w-100">
+                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    <?php elseif ($izn_krj['status_izin_kerja'] == 'Sedang Dikerjakan') : ?>
+                                                        <td class="align-middle" style="text-align: center;">
+                                                            <div class="d-flex flex-column w-100 mr-2">
+                                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                                    <span class="text-dark mr-2 font-size-sm font-weight-boldest">50%</span>
+                                                                    <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Komplain Sedang Dikerjakan" class="badge badge-primary"><?= $izn_krj['status_izin_kerja']; ?></span>
+                                                                </div>
+                                                                <div class="progress progress-xs w-100">
+                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    <?php elseif ($izn_krj['status_izin_kerja'] == 'Selesai Dikerjakan') : ?>
+                                                        <td class="align-middle" style="text-align: center;">
+                                                            <div class="d-flex flex-column w-100 mr-2">
+                                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                                    <span class="text-dark mr-2 font-size-sm font-weight-boldest">75%</span>
+                                                                    <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Komplain telah selesai dikerjakan" class="badge badge-primary"><?= $izn_krj['status_izin_kerja']; ?></span>
+                                                                </div>
+                                                                <div class="progress progress-xs w-100">
+                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    <?php elseif ($izn_krj['status_izin_kerja'] == 'Selesai') : ?>
+                                                        <td class="align-middle" style="text-align: center;">
+                                                            <div class="d-flex flex-column w-100 mr-2">
+                                                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                                                    <span class="text-dark mr-2 font-size-sm font-weight-boldest">100%</span>
+                                                                    <span data-toggle="tooltip" data-theme="dark" data-placement="left" title="Komplain telah selesai dan berhasil ditutup" class="badge badge-success"><?= $izn_krj['status_izin_kerja']; ?></span>
+                                                                </div>
+                                                                <div class="progress progress-xs w-100">
+                                                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    <?php endif; ?>
+
+                                                    <td class="align-middle" style="text-align: center;">
+                                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#DetailComplain<?= $izn_krj['id_complain']; ?>">
                                                             Detail
                                                         </button>
                                                     </td>
+                                                    <td class="align-middle" style="text-align: center;">
+                                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#DetailPekerjaan<?= $izn_krj['id_complain']; ?>">
+                                                            Detail
+                                                        </button>
+                                                    </td>
+                                                    <td class="align-middle" style="text-align: center;">
+                                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#DetailLainnya<?= $izn_krj['id_complain']; ?>">
+                                                            Detail
+                                                        </button>
+                                                    </td>
+                                                    <td class="align-middle" style="text-align: center;">
+                                                        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#DetailMulaiAkhirKerja<?= $izn_krj['id_complain']; ?>">
+                                                            Detail
+                                                        </button>
+                                                    </td>
+
+                                                    <td class="align-middle" style="text-align: center;">
+                                                        <?php if ($izn_krj['status_izin_kerja'] == "Izin Kerja Disetujui") : ?>
+                                                            <a href="<?= base_url("pekerjaan/mulai/" . $izn_krj['id']) ?>" class="btn btn-warning">Mulai Pekerjaan</a>
+                                                        <?php elseif ($izn_krj['status_izin_kerja'] == "Sedang Dikerjakan") : ?>
+                                                            <a href="<?= base_url("pekerjaan/akhir/" . $izn_krj['id']) ?>" class="btn btn-success">Akhiri Pekerjaan</a>
+                                                        <?php else : ?>
+                                                            <button disabled class="btn btn-success" style="cursor: not-allowed;"><?= $izn_krj['status_izin_kerja']; ?></button>
+                                                        <?php endif; ?>
+                                                    </td>
                                                 </tr>
+
+                                                <?php $i++; ?>
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
@@ -154,104 +204,102 @@
                 </div>
             </div>
             <!--end::Card-->
-
         </div>
         <!--end::Container-->
     </div>
     <!--end::Entry-->
-
 </div>
 
-<!-- Modal Gambar-->
+
+<!-- Modal view detail Complain-->
 <?php foreach ($complain as $comp) : ?>
-    <!-- Detail Gambar -->
-    <div class="modal fade" id="gambarmodalcomp<?PHP echo $comp['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModaldetailfotoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="DetailComplain<?= $comp['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalViewLabelcomplain">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    <h5 class="modal-title" id="myModalViewLabelcomplain">Detail Komplain</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="title title-up">Detail Gambar</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="fg-gallery cols-3">
-                        <img src="<?= base_url()  ?>assets/img/complain/<?= $comp['gambar']; ?>" alt="">
-                        <img src="<?= base_url()  ?>assets/img/complain/<?= $comp['gambar2']; ?>" alt="">
-                        <img src="<?= base_url()  ?>assets/img/complain/<?= $comp['gambar3']; ?>" alt="">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--  End Modal -->
-<?php endforeach; ?>
+                <form action="" method="post">
+                    <div class="modal-body">
 
-<!-- Modal Izin -->
-<?php foreach ($complain as $izn) : ?>
-    <div class="modal fade" id="izin<?= $izn['id_complain']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header justify-content-center">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <i class="now-ui-icons ui-1_simple-remove"></i>
-                    </button>
-                    <h4 class="title title-up">Detail Izin Kerja</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="table-responsive" style="color: black;">
-                                <table class="table table-hover table-bordered" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th class="align-middle" style="text-align: center;">ID Complain</th>
-                                            <th class="align-middle" style="text-align: center;">Nama Kontraktor</th>
-                                            <th class="align-middle" style="text-align: center;">Nama Penanggung Jawab</th>
-                                            <th class="align-middle" style="text-align: center;">No Telepon Kantor</th>
-                                            <th class="align-middle" style="text-align: center;">Deskripsi Pekerjaan</th>
-                                            <th class="align-middle" style="text-align: center;">Waktu Mulai</th>
-                                            <th class="align-middle" style="text-align: center;">Waktu Akhir</th>
-                                            <th class="align-middle" style="text-align: center;">Tanggal Dikerjakan</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <tr>
-                                            <!-- Lihat data Email & Nama Buat Admin Complain -->
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['id_complain']; ?></td>
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['nama_kontraktor']; ?></td>
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['nama_penanggung_jawab']; ?></td>
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['no_telp_kantor']; ?></td>
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['deskripsi_pekerjaan']; ?></td>
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['waktu_mulai']; ?></td>
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['waktu_akhir']; ?></td>
-                                            <td class="align-middle" style="text-align: center;"><?= $izn['tanggal_dikerjakan']; ?></td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" value="<?= $comp['email']; ?>" readonly>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="nama">Nama Lengkap</label>
+                                <input type="nama" class="form-control" id="nama" value="<?= $comp['nama']; ?>" readonly>
                             </div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="judul">Judul Komplain</label>
+                                <input type="text" class="form-control" id="judul" value="<?= $comp['judul_complain']; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="deksripsi">Deskripsi</label>
+                                <textarea class="form-control" rows="3" readonly><?= $comp['deskripsi']; ?></textarea>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="deksripsi">Lokasi Pekerjaan</label>
+                                <textarea class="form-control" rows="3" readonly><?= $comp['lokasi_pekerjaan']; ?></textarea>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-5">
+                                <label for="keadaan">Tingkat Bahaya</label>
+                                <input type="text" class="form-control" id="keadaan" value="<?= $comp['tingkat_bahaya']; ?>" readonly>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="bahaya">Tingkat Bahaya</label>
+                                <input type="text" class="form-control" id="bahaya" value="<?= $comp['keadaan']; ?>" readonly>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="validationTooltipUsername">Tanggal Diajukan</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="fas fa-calendar-alt"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" id="validationTooltipUsername" value="<?= $comp['tanggal_ajukan']; ?>" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <label class="control-label font-weight-bold" style="display: block; height:50px; line-height:50px; text-align:center; font-size:20px;"> Gambar Komplain</label>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 col-sm-6 m-auto">
+                                <img src="<?= base_url()  ?>assets/img/complain/<?= $comp['gambar']; ?>" class="img-thumbnail" width="300px">
+                            </div>
+                            <div class="form-group col-md-4 col-sm-6 m-auto">
+                                <img src="<?= base_url()  ?>assets/img/complain/<?= $comp['gambar2']; ?>" class="img-thumbnail" width="300px">
+                            </div>
+                            <div class="form-group col-md-4 col-sm-6 m-auto">
+                                <img src="<?= base_url()  ?>assets/img/complain/<?= $comp['gambar3']; ?>" class="img-thumbnail" width="300px">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 <?php endforeach; ?>
 <!--  End Modal -->
 
-<!-- Modal Pekerjaan -->
-<?php foreach ($izin as $i) : ?>
-    <div class="modal fade" id="pekerjaan<?= $i['id_complain']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+
+<!-- Modal view detail Pekerjaan Dan Lainnya-->
+<?php foreach ($izin_kerja as $i) : ?>
+
+    <!-- Modal view detail Pekerjaan -->
+    <div class="modal fade" id="DetailPekerjaan<?= $i['id_complain']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header justify-content-center">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
@@ -299,113 +347,169 @@
     </div>
 
     <!--Modal view detail lainnya(potensi,tindak,apd)-->
-    <div class="modal fade" id="detaiil<?PHP echo $i['id_complain']; ?>" tabindex="-1" role="dialog" aria-labelledby="detaiilLabel">
+    <div class="modal fade" id="DetailLainnya<?PHP echo $i['id_complain']; ?>" tabindex="-1" role="dialog" aria-labelledby="detaiilLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header justify-content-center">
                     <h5 class="modal-title" id="detaiilLabel">Detail Lainnya</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="" method="post">
-                    <div class="modal-body">
-                        <!--Jenis Potensi-->
-                        <h5 class="title" id="detaiilLabel">Detail Jenis Potensi</h5>
-                        <table id="" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
-                            <thead>
-                                <th style="text-align:center; vertical-align:middle;">NO.</th>
-                                <th style="text-align:center; vertical-align:middle;">Nama Jenis Potensi</th>
-                            </thead>
-                            <?php
-                            $id = $i['id'];
-                            $query = "SELECT *
+                <div class="modal-body">
+                    <!--Jenis Potensi-->
+                    <h5 class="title" id="detaiilLabel">Detail Jenis Potensi</h5>
+                    <table id="" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <th style="text-align:center; vertical-align:middle;">NO.</th>
+                            <th style="text-align:center; vertical-align:middle;">Nama Jenis Potensi</th>
+                        </thead>
+                        <?php
+                        $id = $i['id'];
+                        $query = "SELECT *
                         FROM `tb_master_jenis_potensi` JOIN `tb_jenis_potensi`
                         ON `tb_master_jenis_potensi`.`id_master_JP` = `tb_jenis_potensi`.`id_JP`
                         WHERE `id_izin_kerja` = $id";
-                            $data['select'] = $this->db->query($query)->result_array();
-                            $a = 1;
-                            ?>
-                            <?php foreach ($data['select'] as $slt) : ?>
-                                <tbody>
+                        $data['select'] = $this->db->query($query)->result_array();
+                        $a = 1;
+                        ?>
+                        <?php foreach ($data['select'] as $slt) : ?>
+                            <tbody>
+                                <td style="text-align:center; vertical-align:middle;"><?= $a ?></td>
+                                <td style="text-align:center; vertical-align:middle;"><?= $slt['nama_Jenis_Potensi']; ?></td>
+                            </tbody>
+                            <?php $a++; ?>
+                        <?php endforeach; ?>
+                    </table>
 
-                                    <td style="text-align:center; vertical-align:middle;"><?= $a ?></td>
-                                    <td style="text-align:center; vertical-align:middle;"><?= $slt['nama_Jenis_Potensi']; ?></td>
-
-                                </tbody>
-                                <?php $a++; ?>
-                            <?php endforeach; ?>
-
-                        </table>
-
-                        <!--Tindak Pencegahan-->
-                        <h5 class="title" id="myModalViewDetailLabel">Detail Tindak Pencegahan</h5>
-                        <table id="" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
-                            <thead>
-                                <th style="text-align:center; vertical-align:middle;">NO.</th>
-                                <th style="text-align:center; vertical-align:middle;">Nama Tindak Pencegahan</th>
-                            </thead>
-                            <?php
-                            $id = $i['id'];
-                            $query = "SELECT *
+                    <!--Tindak Pencegahan-->
+                    <h5 class="title" id="myModalViewDetailLabel">Detail Tindak Pencegahan</h5>
+                    <table id="" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <th style="text-align:center; vertical-align:middle;">NO.</th>
+                            <th style="text-align:center; vertical-align:middle;">Nama Tindak Pencegahan</th>
+                        </thead>
+                        <?php
+                        $id = $i['id'];
+                        $query = "SELECT *
                           FROM `tb_master_tindak_pencegahan` JOIN `tb_tindak_pencegahan`
                           ON `tb_master_tindak_pencegahan`.`id_master_TP` = `tb_tindak_pencegahan`.`id_tindak_pencegahan`
                           WHERE `id_izin_kerja` = $id";
-                            $data['select'] = $this->db->query($query)->result_array();
-                            $a = 1;
-                            ?>
-                            <?php foreach ($data['select'] as $slt) : ?>
-                                <tbody>
+                        $data['select'] = $this->db->query($query)->result_array();
+                        $a = 1;
+                        ?>
+                        <?php foreach ($data['select'] as $slt) : ?>
+                            <tbody>
+                                <td style="text-align:center; vertical-align:middle;"><?= $a ?></td>
+                                <td style="text-align:center; vertical-align:middle;"><?= $slt['nama_tindak_pencegahan']; ?></td>
+                            </tbody>
+                            <?php $a++; ?>
+                        <?php endforeach; ?>
+                    </table>
 
-                                    <td style="text-align:center; vertical-align:middle;"><?= $a ?></td>
-                                    <td style="text-align:center; vertical-align:middle;"><?= $slt['nama_tindak_pencegahan']; ?></td>
-
-                                </tbody>
-                                <?php $a++; ?>
-                            <?php endforeach; ?>
-
-                        </table>
-
-                        <!--APD-->
-                        <h5 class="title" id="myModalViewDetailLabel">Detail APD</h5>
-                        <table id="" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
-                            <thead>
-                                <th style="text-align:center; vertical-align:middle;">NO.</th>
-                                <th style="text-align:center; vertical-align:middle;">Nama APD</th>
-                                <th style="text-align:center; vertical-align:middle;">Gambar APD</th>
-                            </thead>
-                            <?php
-                            $id = $i['id'];
-                            $query = "SELECT *
+                    <!--APD-->
+                    <h5 class="title" id="myModalViewDetailLabel">Detail APD</h5>
+                    <table id="" class="table table-striped table-hover table-bordered" width="100%" cellspacing="0">
+                        <thead>
+                            <th style="text-align:center; vertical-align:middle;">NO.</th>
+                            <th style="text-align:center; vertical-align:middle;">Nama APD</th>
+                            <th style="text-align:center; vertical-align:middle;">Gambar APD</th>
+                        </thead>
+                        <?php
+                        $id = $i['id'];
+                        $query = "SELECT *
                           FROM `tb_master_apd` JOIN `tb_apd`
                           ON `tb_master_apd`.`id_master_APD` = `tb_apd`.`id_APD`
                           WHERE `id_izin_kerja` = $id";
-                            $data['select'] = $this->db->query($query)->result_array();
-
-                            ?>
-                            <?php $a = 1; ?>
-                            <?php foreach ($data['select'] as $slt) : ?>
-                                <tbody>
-
-                                    <td style="text-align:center; vertical-align:middle;"><?= $a ?></td>
-                                    <td style="text-align:center; vertical-align:middle;"><?= $slt['nama_APD']; ?></td>
-                                    <td style="text-align:center; vertical-align:middle;">
-                                        <img src="<?= base_url()  ?>assets/img/workpermit/<?= $slt['gambar_apd']; ?>" class="img-thumbnail" width="200" height="150">
-                                    </td>
-                                </tbody>
-                                <?php $a++; ?>
-                            <?php endforeach; ?>
-
-                        </table>
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    </div>
-                </form>
+                        $data['select'] = $this->db->query($query)->result_array();
+                        ?>
+                        <?php $a = 1; ?>
+                        <?php foreach ($data['select'] as $slt) : ?>
+                            <tbody>
+                                <td style="text-align:center; vertical-align:middle;"><?= $a ?></td>
+                                <td style="text-align:center; vertical-align:middle;"><?= $slt['nama_APD']; ?></td>
+                                <td style="text-align:center; vertical-align:middle;">
+                                    <img src="<?= base_url()  ?>assets/img/workpermit/<?= $slt['gambar_apd']; ?>" class="img-thumbnail" width="200" height="150">
+                                </td>
+                            </tbody>
+                            <?php $a++; ?>
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal view detail Pekerjaan -->
+    <div class="modal fade" id="DetailMulaiAkhirKerja<?= $i['id_complain']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="now-ui-icons ui-1_simple-remove"></i>
+                    </button>
+                    <h4 class="title title-up">Data Mulai & Akhir Kerja</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="table-responsive" style="color: black;">
+                                <table class="table table-hover table-bordered" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-middle" style="text-align: center; vertical-align: middle;">No.</th>
+                                            <th class="align-middle" style="text-align: center; vertical-align: middle;">Gambar Sebelum Kerja</th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                    $data['mulai_kerja'] = $this->db->get_where('tb_mulai_kerja', ['id_izin_kerja' => $i['id']])->result_array();
+                                    $a = 1;
+                                    ?>
+                                    <?php foreach ($data['mulai_kerja'] as $m_krj) : ?>
+                                        <tbody>
+                                            <td class="align-middle" style="text-align: center; vertical-align: middle;"><?= $a; ?></td>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <img src="<?= base_url()  ?>assets/img/pekerjaan/awal/<?= $m_krj['gambar']; ?>" class="img-thumbnail" width="300px">
+                                            </td>
+                                        </tbody>
+                                        <?php $a++; ?>
+                                    <?php endforeach; ?>
+                                </table>
+
+                                <table class="table table-hover table-bordered" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-middle" style="text-align: center; vertical-align: middle;">No.</th>
+                                            <th class="align-middle" style="text-align: center; vertical-align: middle;">Gambar Sesudah Kerja</th>
+                                        </tr>
+                                    </thead>
+                                    <?php
+                                    $data['akhir_kerja'] = $this->db->get_where('tb_akhir_kerja', ['id_izin_kerja' => $i['id']])->result_array();
+                                    $a = 1;
+                                    ?>
+                                    <?php foreach ($data['akhir_kerja'] as $a_krj) : ?>
+                                        <tbody>
+                                            <td class="align-middle" style="text-align: center; vertical-align: middle;"><?= $a; ?></td>
+                                            <td class="align-middle" style="text-align: center;">
+                                                <img src="<?= base_url()  ?>assets/img/pekerjaan/akhir/<?= $a_krj['gambar']; ?>" class="img-thumbnail" width="300px">
+                                            </td>
+                                        </tbody>
+                                        <?php $a++; ?>
+                                    <?php endforeach; ?>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <?php endforeach; ?>
 <!--  End Modal -->

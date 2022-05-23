@@ -94,30 +94,10 @@
 
 <!--begin::Page Vendors(used by this page CALENDER)-->
 <script src="<?= base_url('assets_pengguna/') ?>plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
+<script src="<?= base_url('assets_pengguna/') ?>js/locale-all.js"></script>
 <!--end::Page Vendors-->
-<!--begin::Page Scripts(used by this page)-->
-<script src="<?= base_url('assets_pengguna/') ?>js/js_pengguna/kalender.js"></script>
-<!--end::Page Scripts-->
-<!--end::Page Scripts-->
-<!--slider-->
-<script type="text/javascript">
-    var slideIndex = 0;
-    showSlides();
 
-    function showSlides() {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slideIndex++;
-        if (slideIndex > slides.length) {
-            slideIndex = 1
-        }
-        slides[slideIndex - 1].style.display = "block";
-        setTimeout(showSlides, 5000); // Change image every 5 seconds
-    }
-</script>
+
 <script type="text/javascript">
     var KTCalendarBasic = function() {
 
@@ -137,11 +117,14 @@
 
                     isRTL: KTUtil.isRTL(),
 
+                    locale: 'ind',
+
                     header: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
+
 
                     height: 800,
                     contentHeight: 780,
@@ -152,13 +135,13 @@
 
                     views: {
                         dayGridMonth: {
-                            buttonText: 'month'
+                            buttonText: 'Bulan'
                         },
                         timeGridWeek: {
-                            buttonText: 'week'
+                            buttonText: 'Minggu'
                         },
                         timeGridDay: {
-                            buttonText: 'day'
+                            buttonText: 'Hari'
                         }
                     },
 
@@ -170,27 +153,29 @@
                     navLinks: true,
                     events: [<?php foreach ($agenda as $a) : ?> {
                                 title: '<?= $a['kegiatan'] ?>',
+                                judul_kegiatan: 'Judul Kegiatan : <?= $a['kegiatan'] ?>',
+                                nama_peminjaman: '<?= $a['nama_peminjam'] ?>',
+                                ruangan: '<?= $a['ruangan'] ?>',
+                                jenis_layout: '<?= $a['jenis_layout'] ?>',
+                                jumlah_orang: '<?= $a['jumlah_orang'] ?>',
                                 start: '<?= substr($a['tanggal_mulai'], 0, 7) ?>' + '<?= substr($a['tanggal_mulai'], 7, 3) ?>T<?= $a['waktu_mulai'] ?>',
-                                end: '<?= substr($a['tanggal_mulai'], 0, 7) ?>' + '<?= substr($a['tanggal_mulai'], 7, 3) ?>T<?= $a['waktu_akhir'] ?>',
-                                <?php if ($a['peminjam'] == $user['email']) : ?>
-                                    className: "fc-event-light fc-event-solid-primary"
-                                <?php endif; ?>
+                                end: '<?= substr($a['tanggal_selesai'], 0, 7) ?>' + '<?= substr($a['tanggal_selesai'], 7, 3) ?>T<?= $a['waktu_selesai'] ?>',
+                                className: "fc-event-info"
                             },
                         <?php endforeach; ?>
                     ],
 
                     eventRender: function(info) {
                         var element = $(info.el);
-
-                        if (info.event.extendedProps && info.event.extendedProps.description) {
+                        if (info.event.extendedProps && info.event.extendedProps.judul_kegiatan) {
                             if (element.hasClass('fc-day-grid-event')) {
-                                element.data('content', info.event.extendedProps.description);
+                                element.data('content', info.event.extendedProps.judul_kegiatan);
                                 element.data('placement', 'top');
                                 KTApp.initPopover(element);
                             } else if (element.hasClass('fc-time-grid-event')) {
-                                element.find('.fc-title').append('<div class="fc-description">' + info.event.extendedProps.description + '</div>');
+                                element.find('.fc-title').append('<div class="fc-new_line"> <br> </div>' + '<div class="fc-nama_peminjam"><text style="font-weight: bolder;"> Nama Peminjam :</text> ' + info.event.extendedProps.nama_peminjaman + '</div>' + '<div class="fc-ruangan"><text style="font-weight: bolder;"> Ruangan :</text> ' + info.event.extendedProps.ruangan + '</div>' + '<div class="fc-jenis_layout"><text style="font-weight: bolder;"> Jenis Layout : </text>' + info.event.extendedProps.jenis_layout + '</div>' + '<div class="fc-jumlah_orang" style="font-weight: bolder;"> Jumlah Orang : <span class="label label-danger label-inline mr-2">' + info.event.extendedProps.jumlah_orang + '</span>');
                             } else if (element.find('.fc-list-item-title').lenght !== 0) {
-                                element.find('.fc-list-item-title').append('<div class="fc-description">' + info.event.extendedProps.description + '</div>');
+                                element.find('.fc-list-item-title').append('<div class="fc-ruangan">' + info.event.extendedProps.ruangan + '</div>');
                             }
                         }
                     }
